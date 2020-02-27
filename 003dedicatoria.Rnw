@@ -1,0 +1,11 @@
+% !Rnw root = 000proyecto.Rnw
+\chapter*{Dedicatoria}
+
+%\begin{center}
+%{\large Dedicatoria}
+%\end{center}
+%\vspace{1cm}
+
+Aqui va mi dedicatoria
+
+\newpage

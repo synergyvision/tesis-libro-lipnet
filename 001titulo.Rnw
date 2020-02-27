@@ -1,0 +1,62 @@
+% !Rnw root = 000proyecto.Rnw
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\scalebox{.8}{\includegraphics{img/ucab.eps}}
+
+\vspace{.5cm}
+
+\begin{small}
+FACULTAD DE INGENIERÍA
+
+\vspace{0.2cm}
+
+ESCUELA DE INGENIERÍA INFORMÁTICA
+
+\end{small}
+
+\vspace{5cm}
+
+\begin{Huge}
+
+
+\begin{center}
+\large{\bf LECTURA DE LABIOS EN ESPAÑOL CON APRENDIZAJE PROFUNDO}
+\end{center}
+
+\end{Huge}
+
+\vspace{2cm}
+
+TRABAJO ESPECIAL DE GRADO
+
+\vspace{0.2cm}
+
+Presentado ante la
+
+\vspace{0.2cm}
+
+UNIVERSIDAD CATÓLICA ANDRÉS BELLO
+
+\vspace{0.2cm}
+
+Como parte de los requisitos para optar al título de
+
+\vspace{0.2cm}
+
+{\bf INGENIERO EN INFORMÁTICA}
+\vspace{2cm}
+
+\end{center}
+
+\hspace{2.5cm} \textbf{REALIZADO POR} \hspace{1.7cm} \textbf{Manuel Espinoza}
+
+\vspace{0.2cm}
+\hspace{2.5cm} \textbf{PROFESOR GUÍA} \hspace{1.7cm} \textbf{Alexander Ramírez}
+
+\vspace{0.2cm}
+\hspace{2.5cm} \textbf{FECHA} \hspace{4.1cm} \textbf{Julio 2020}
+
+\newpage

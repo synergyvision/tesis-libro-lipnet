@@ -1,0 +1,159 @@
+% !Rnw root = 000proyecto.Rnw
+
+\newpage
+
+\chapter{PLANTEAMIENTO DEL PROBLEMA}
+
+\section{Planteamiento del problema}
+
+La comunicación entre las personas forma parte fundamental del desenvolvimiento y desarrollo como individuos, los seres humanos
+son seres sociables que siempre están en constante comunicación con los demás, desde la antigüedad la forma en que se comunican
+ha ido evolucionando, la humanidad ha creado sonidos, símbolos, dibujos, alfabetos, mensajes escritos, libros hasta formas de comunicación más complejas como el lenguaje de señas o el código Morse llegando hasta los medios de comunicación que se conocen
+hoy en día, la televisión, la radio, los teléfonos y finalmente el internet \cite{comunication-history}.
+
+La tecnología cambió para siempre la forma en que los seres humanos se comunican, pasaron de enviar una carta escrita a simplemente enviar un mensaje por internet, incluso la tecnología ha llegado a tal punto que las personas con discapacidad auditiva o visual, pueden utilizarla sin mayor dificultad. Existen algoritmos de aprendizaje automático, que permiten generar subtítulos en vídeos, haciéndolos accesibles para personas con discapacidad auditiva \cite{youtube-subs}, algoritmos de procesamiento de lenguajes naturales (PLN) que permiten extraer un texto y procesarlo para emitir una voz sintética, haciendo accesible su uso a las personas con discapacidad visual \cite{PNL}, el campo de la inteligencia artificial ha realizado inmensos avances en este sentido, ayudando a estas personas a desenvolverse de una manera más fácil en su día a día.
+
+Las personas con estas discapacidades tienen sus formas de comunicarse más allá de lo que ofrece la tecnología, tienen el lenguaje de señas o el sistema de escritura y lectura Braille, sin embargo, personas con discapacidad auditiva al utilizar el lenguaje de señas se encuentran con un problema, solo pueden comunicarse con aquellas personas que también lo conozcan, cuando se encuentran en sus actividades diarias la mayoría de las personas, no conocen el lenguaje de señas, haciendo difícil su
+comunicación \cite{auditivity-discapacity}. Las personas con esta discapacidad se apoyan en otra técnica llamada
+lectura de labios, desarrollan esta habilidad de forma natural, lo cual les permite entender
+un poco más a sus interlocutores.
+
+La lectura de labios es el arte o técnica de comprender lo que se habla, interpretando los movimientos de los labios y los demás gestos con los que el interlocutor acompaña sus palabras, esta técnica es ampliamente utilizada por parte de personas con discapacidad auditiva, sin embargo, es insuficiente, los mejores lectores de labios nunca logran descifrar más allá del 30\% al 35\% de los mensajes orales \cite{labiofacial-reading}. La Universidad de Oxford en Reino Unido, midió el desempeño en personas capaces de leer labios, mostrándoles vídeos del repositorio para investigaciones científicas \textit{GRID corpus}, obteniendo en promedio una precisión de 52,3\% en el desempeño de los participantes \cite{lip-net}.
+
+Leer los labios es una tarea notoriamente difícil para los humanos, incluso para personas experimentadas, para la correcta comprensión del habla mediante esta técnica es necesario que se cumplan ciertas condiciones, entre ellas, tener una distancia ideal de 1,5 metros con la otra persona, a mayor distancia mayor dificultad, los interlocutores deben de estar uno frente al otro, la persona hablante debe tener muy buena vocalización, no deben existir obstáculos que impidan ver los labios (taparse los labios con las manos, tener un lápiz o cigarrillo en la boca, incluso masticar chicle), el ritmo de emisión del mensaje debe ser normal o un poco lento \cite{labiofacial-reading}\cite{labiofacial-reading-2}. Estas son solo algunas de las consideraciones que se deben cumplir para que se facilite la lectura de labios, sin embargo, no todo el tiempo van existir estas condiciones ideales, cumplirlas puede ser incluso una tarea difícil y, aun así, cumplir todo esto no garantiza que los seres humanos
+tengan un buen desempeño en esta técnica.
+
+Además de todo esto existen otros factores que hacen de esta técnica un verdadero reto. Al hablar hay sonidos que simplemente no son visibles en los labios, por ejemplo, palabras con la letra “g”, algunos sonidos generan la misma forma en los labios
+creando así gran confusión, por ejemplo, palabras que inicien con las letras “m”, “b” o “p” \cite{labiofacial-reading}.
+Si no se tiene un contexto antes de iniciar la conversación, es aún más difícil reconocer los movimientos en los labios, que permiten a su vez reconocer el habla, leer los labios sin un contexto o sin tener indicios del tema de conversación, hace más difícil superar las ambigüedades que puedan existir, producto de palabras que producen la
+misma forma en los labios \cite{labiofacial-reading-2}. El fracaso a la hora de leer labios también se debe a que, en muchas ocasiones, las personas deben adivinar que palabras está emitiendo su interlocutor, porque no las entienden o porque no son parte del vocabulario que manejan.
+
+Por todos estos factores leer labios resulta una tarea titánica para cualquier ser humano, las palabras se confunden unas con otras, se debe tener un buen nivel del lenguaje entre otros. Pareciera ser que leer labios es una tarea imposible, sin embargo,
+en la Universidad de Oxford se han realizado grandes avances con respecto a esta técnica, con campos de estudio como la inteligencia artificial se han sobrepasado estas barreras que impiden la lectura de labios.
+
+La Universidad de Oxford realizó un modelo de aprendizaje profundo, para leer labios en el idioma inglés, utilizaron redes neuronales convolucionales y redes neuronales recurrentes, el proyecto fue llamado \textit{LipNet} y tiene un desempeño del 95,2\% en el repositorio \textit{GRID corpus} \cite{lip-net}, es un gran avance en la lectura de labios por parte de un modelo de inteligencia artificial, sin embargo, en el idioma español no existe ningún enfoque que utilice inteligencia artificial y mucho menos aprendizaje profundo para atacar la difícil tarea de leer labios. Por todos estos hechos se propone el desarrollo de un modelo de aprendizaje profundo, que sea capaz de reconocer el habla en vídeos sin audio en español, para facilitar la lectura de labios en este idioma.
+
+\section{Objetivos}
+\subsection{Objetivo General}\hfill\\
+Desarrollar un modelo de aprendizaje profundo personalizado para el reconocimiento del habla en vídeos sin audio en español.
+\subsection{Objetivos Específicos}
+\begin{enumerate}[\hspace{30pt}1.]
+	\item Implementar el modelo de aprendizaje profundo basado en \textit{LipNet} para el reconocimiento del habla en vídeos sin audio.
+	\item Generar un repositorio de datos en español para el reconocimiento del habla en vídeos sin audio.
+	\item Diseñar e implementar el modelo de aprendizaje profundo para reconocer el habla en vídeos sin audio en español.
+	\item Implementar el modelo de reconocimiento del habla en vídeos sin audio en español.
+\end{enumerate}
+
+\section{Alcance y limitaciones}
+\subsection{Alcance}
+\begin{enumerate}[\hspace{30pt}1.]
+\item\textbf{Implementar el modelo de aprendizaje profundo basado en \textit{LipNet} para el reconocimiento del habla en vídeos sin audio.}
+
+\textit{LipNet} es una investigación científica que describe un modelo de aprendizaje
+profundo capaz de reconocer el habla en vídeos sin audio, dicha investigación fue
+realizada por la Universidad de Oxford en Reino Unido y representa uno de los
+avances más importantes en el arte de leer labios, mediante el uso de la inteligencia
+artificial, alcanzando una precisión del 95,2\% en el repositorio de vídeos \textit{GRID corpus} \cite{lip-net}, esta investigación se encuentra a disposición de cualquier persona en internet, la
+idea de este apartado es implementar redes neuronales artificiales que permitan el
+reconocimiento visual del habla, siguiendo los lineamientos que se encuentran en
+dicha investigación. Con la implementación de este proyecto se busca estudiar las
+redes neuronales recurrentes y las redes convolucionales que diseñaron, estudiar
+que herramientas utilizaron para llevar a cabo dichas redes, cuál fue su enfoque y qué teorías matemáticas fueron utilizadas para llevar a cabo el proyecto. También se
+busca obtener información de la arquitectura que diseñaron, conocer los detalles
+específicos de este modelo y entender a fondo cómo funciona.
+
+Además, se desea determinar qué elementos de este proyecto son necesarios,
+qué se puede adaptar, qué se puede eliminar e incluso qué se puede mejorar, todo
+esto con el propósito de diseñar e implementar redes neuronales artificiales propias,
+capaces de reconocer el habla en vídeos sin audio en español.
+
+\item\textbf{Generar un repositorio de datos en español para el reconocimiento del habla en vídeos sin audio.}
+
+El propósito de este objetivo es construir todo el repositorio de datos necesarios
+para entrenar el modelo de aprendizaje profundo. Este conjunto de datos constará de
+una serie de vídeos donde participarán tanto hombres como mujeres de diferentes
+edades, los vídeos tendrán una duración máxima de cinco segundos y en ellos los
+participantes emitirán su voz para construir oraciones con la siguiente estructura:
+comando + color + preposición + letra + dígito + adverbio. Los vídeos serán grabados
+de frente a los participantes y de los hombros hacia arriba, a una distancia de 1,5 o 2
+metros y en un ambiente con buena iluminación. Esto se hará con la finalidad de
+captar en vídeo los movimientos en los labios que estas oraciones generen,
+facilitando así, el futuro reconocimiento de patrones por parte del modelo. El audio de
+cada vídeo tendrá su versión escrita, que se utilizará como etiqueta para aplicar la
+técnica de aprendizaje supervisado. Además de todo lo mencionado, se estudiará
+cuáles son los repositorios de datos disponibles que puedan ser de utilidad para el
+reconocimiento del habla en vídeos sin audio para el idioma español.
+
+Con estos dos enfoques se construirá un repositorio que servirá no solo para
+entrenar y validar el modelo de aprendizaje profundo desarrollado, sino que también
+estará disponible para la comunidad científica, con la finalidad de que cualquier interesado pueda utilizar este conjunto de datos para entrenar y validar sus propias
+soluciones.
+\item\textbf{Diseñar e implementar el modelo de aprendizaje profundo para reconocer el
+habla en vídeos sin audio en español.}
+
+En este apartado se diseñarán las redes neuronales artificiales que reconocerán
+los patrones que existen en el habla hispana a la hora de hablar. Se desarrollarán las
+arquitecturas, los comportamientos y se definirán los hiperparámetros que tendrán
+estas redes. Una vez realizado este trabajo se entrenarán las redes neuronales con
+el conjunto de datos generados en el objetivo tres, para ello se prepararán los datos,
+se eliminará el audio de cada vídeo, se utilizarán las etiquetas generadas para hacer
+uso del aprendizaje supervisado y se dividirá el conjunto de datos para el
+entrenamiento y validación. Aproximadamente el 20\% del repositorio total, se utilizará
+para los datos de validación y el restante para el entrenamiento \cite{test-data}. Una vez
+entrenado el modelo se validará su funcionamiento con el conjunto de datos de
+validación y se medirá su desempeño.
+Se diseñarán varios modelos de aprendizaje profundo bajo esta visión, utilizando
+diferentes enfoques en el diseño de la arquitectura y el comportamiento, repitiendo
+estos pasos hasta obtener un modelo, que tenga un desempeño óptimo en el conjunto
+de datos. De todos los modelos desarrollados, el que tenga el mejor desempeño será
+el resultado final de este objetivo.
+\item\textbf{Implementar el modelo de reconocimiento del habla en vídeos sin audio en
+español.}
+
+Una vez entrenadas las redes neuronales artificiales, el modelo será
+implementado en nuevos vídeos. En este apartado el modelo de aprendizaje profundo
+será capaz de procesar vídeos sin audio para predecir qué es lo que está diciendo la
+persona.
+La solución será capaz de reconocer el habla en vídeos con la estructura
+propuesta en el objetivo tres y en oraciones con la siguiente forma: comando + color
++ preposición + letra + dígito + adverbio. La finalidad es que, con futuras
+investigaciones, pero partiendo de esta como base, se pueda reconocer el habla en
+oraciones con estructuras más complejas. Sin embargo, con este enfoque se espera
+reconocer oraciones como, por ejemplo: “Llama a casa”.
+\end{enumerate}
+\subsection{Limitaciones}
+\begin{itemize}
+\item El modelo de aprendizaje profundo será desarrollado en un computador con un
+procesador Intel i5, memoria RAM de 8 GB y con sistema operativo Windows 10
+Home, el fabricante es Acer y el modelo se llama Nitro AN515-51. Los resultados,
+las pruebas y todo el proceso de desarrollo serán realizados en este equipo.
+\item Los vídeos del repositorio serán grabados con una cámara Nikon de 16.1
+megapíxeles, dando como resultado vídeos con una resolución de 480p a 60
+cuadros por segundo.
+\end{itemize}
+
+\section{Justificación}
+Como se adelantó en el planteamiento del problema, los seres humanos tienen
+un desempeño bastante pobre a la hora de leer labios, esta resulta ser una tarea bastante
+difícil incluso para los profesionales que se dedican a esto \cite{lip-net}. Este proyecto tiene la
+intención de establecer las bases para que la inteligencia artificial sea capaz de
+sobrepasar estas barreras, que impiden a las personas tener un buen desempeño en
+esta técnica para el idioma español.
+En la actualidad, existen varios proyectos relacionados con leer labios utilizando
+inteligencia artificial, específicamente utilizando el campo de aprendizaje profundo, sin
+embargo, los avances más importantes y los que tienen mejores resultados se
+encuentran solo disponible para personas de habla inglesa, estos modelos fueron
+diseñados y entrenados solo teniendo en cuenta a personas de esa lengua.
+
+No existe ningún enfoque para el idioma español. Este proyecto busca crear un primer modelo de aprendizaje profundo que sea capaz de reconocer el habla en vídeos
+sin audio en español, utilizando redes neuronales artificiales, un enfoque que hasta ahora
+no se ha estudiado en este idioma.
+El proyecto tiene la intención de reconocer el habla, solo mediante el movimiento
+de los labios, tiene el potencial de ser utilizado en prótesis auditivas mejoradas, dictado
+silencioso en espacios públicos, seguridad, reconocimiento de voz en entornos ruidosos,
+identificación biométrica y procesamiento de películas mudas \cite{lip-net}, esto no solo ayudará a
+personas con discapacidad auditiva sino a los seres humanos en general, no siempre se
+dispondrá del audio en vídeos, habrá veces en que exista mucho ruido o simplemente
+existirán ocasiones en que se necesitará leer labios. Este trabajo también servirá como
+base, para futuras investigaciones que se realicen en el arte de leer labios con
+aprendizaje profundo.

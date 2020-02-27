@@ -1,0 +1,7 @@
+% !Rnw root = 000proyecto.Rnw
+
+\chapter*{Introducción}
+
+Aqui va mi introducción
+
+

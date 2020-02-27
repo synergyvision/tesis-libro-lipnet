@@ -1,0 +1,10 @@
+% !Rnw root = 000proyecto.Rnw
+\chapter*{Agradecimiento}
+
+%\begin{center}
+%{\large Agradecimiento}
+%\end{center}
+%\vspace{1cm}
+
+Aqui van mis agradecimientos
+\newpage
