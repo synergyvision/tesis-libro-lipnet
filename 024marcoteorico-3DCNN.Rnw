@@ -1,0 +1,35 @@
+% !Rnw root = 000proyecto.Rnw
+
+<<echo=FALSE>>=
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(gridExtra)
+@
+
+\section{Redes convolucionales 3D}
+
+Los vídeos se han vuelto una fuente de entretenimiento para millones de personas, a diario se suben miles de vídeos a redes sociales, portales y al internet en general, esto ha ocasionado que investigadores dedicados a la visión por computadora, se interesen en desarrollar técnicas y algoritmos para analizar el contenido semántico y extraer información relevante de estos vídeos, con el fin de desarrollar aplicaciones de búsqueda, recomendaciones, clasificación de vídeos entre otros. Los vídeos presentan la información, a través de una serie de imágenes llamados \textit{frames} que cambian con el tiempo, a pesar de que las redes convolucionales tienen un alto desempeño en el procesamiento de imágenes, son incapaces de modelar información temporal y patrones de movimiento \cite{3d-conv}, dos aspectos críticos para el análisis de vídeos.
+
+Las redes convolucionales 3D fueron diseñadas para resolver estas deficiencias, son redes convolucionales que aplican capas de convolución 3D y \textit{pooling} 3D a los datos de entrada, de tal forma que capturan características a lo largo de las dimensiones espacial y temporal, estas características se conocen como espaciotemporales \cite{human-recognition}. Las redes convolucionales 3D se especializan en aprender estas características, encapsulan información acerca de los objetos, escenas y patrones de movimiento en un vídeo, lo cual las hace eficientes para resolver problemas como el reconocimiento de acciones, detección de eventos anormales, clasificación de vídeos, entre otros. Una red convolucional ignora el ordenamiento temporal en los vídeos, trata a los \textit{frames} de forma análoga a los canales de colores, en cambio las redes convolucionales 3D preservan la información temporal de la entrada y la propagan a través de las capas de la red \cite{3d-conv}.
+
+La entrada de la red consta de múltiples \textit{frames} que son procesados por operaciones de convolución 3D y \textit{pooling} 3D en las capas respectivas. Los kernel y filtros de estas capas son considerados 3D porque tienen un tamaño de $DxKxK$, donde $D$ es la profundidad temporal y $K$ el tamaño espacial (ancho y alto), cabe destacar que se omiten los canales de colores por simplicidad \cite{spatiotemporal}. La convolución 3D se logra aplicando este kernel de tres dimensiones al volumen formado al apilar múltiples \textit{frames} juntos, de esta forma las neuronas de los mapas de características, están conectadas a diversos rectángulos pequeños de varios \textit{frames} de la entrada o de la capa previa, lo cual le permite a la red aprender patrones de movimiento.
+
+\begin{figure}[h]
+  \scalebox{0.5}{\includegraphics{img/3d-conv.png}}
+\caption[Mapas de características de una convolución 3D]{Mapas de características de una convolución 3D \cite{human-recognition}}
+\label{3d-conv}
+\end{figure}
+
+En la figura \ref{3d-conv} se puede observar como las neuronas de un mapa de características están conectadas a múltiples \textit{frames} de la entrada.
+
+Los vídeos tienen un tamaño de $LxHxW$ donde $L$ representa el número de \textit{frames}, $H$ y $W$ son la altura y el ancho respectivamente, al aplicar una capa de convolución con un kernel de tamaño $LxKxK$ como se hace en una red convolucional, las características temporales se pierden, el resultado sería un mapa de características sin ninguna representación de los patrones de movimiento encontrados en el vídeo. Las redes convolucionales 3D aplican el kernel de tres dimensiones $DxKxK$, donde la profundidad temporal representada por $D$, se refiere a la cantidad de \textit{frames} de los datos de entrada, a tomar en cuenta para realizar la operación de convolución, la profundidad temporal es similar a escoger el tamaño del ancho o el alto del kernel, solo que en esta ocasión se escoge el tamaño en la dimensión temporal. El kernel se desliza en tres direcciones (alto, ancho, tiempo) sobre los múltiples \textit{frames} que sirven de entrada, y se realiza la operación de convolución entre el kernel y el volumen sobre el cual se encuentre el kernel en ese momento, así la red aprende las representaciones de los datos de entrada. Los mapas de características generados, son volúmenes de tres dimensiones que preservan la información temporal y los patrones de movimiento encontrados en el vídeo, en la figura \ref{kernel-3d} se puede apreciar el resultado de aplicar un kernel de una capa de convolución 3D.
+
+\begin{figure}[h]
+  \scalebox{0.8}{\includegraphics{img/kernel-3d.png}}
+\caption{Convolución 3D}
+\label{kernel-3d}
+\end{figure}
+
+Al igual que en las redes convolucionales estos kernel se encargan de extraer un tipo de característica, la capa de convolución 3D consiste en aplicar varios kernel para generar múltiples mapas de características y aprender características simples que luego se compongan en más complejas. En la capa de convolución 3D se escogen las dimensiones del kernel, la cantidad, el desplazamiento, el relleno y un nuevo hiperparámetro llamado desplazamiento temporal. La capa de \texit{pooling} 3D funciona de la misma manera, se escogen las dimensiones del campo receptor, se desliza sobre los mapas de características y se aplica una operación fija que puede ser el máximo o el promedio de los valores donde se encuentre la ventana.
+
+Con estas capas de convolución y \texit{pooling} 3D se han diseñado diversas arquitecturas de redes convolucionales que atacan múltiples problemas relacionados con el análisis de vídeos. Estas capas aprenden características espaciotemporales lo cual le permite a la red preservar información temporal. Las redes convolucionales son una especialización de las redes neuronales para atacar problemas de la visión por computadora, ahora se explicará otra especialización de las redes neuronales para resolver problemas relacionados al procesamiento del lenguaje natural.

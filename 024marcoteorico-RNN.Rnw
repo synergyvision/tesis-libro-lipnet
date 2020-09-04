@@ -1,0 +1,86 @@
+% !Rnw root = 000proyecto.Rnw
+
+<<echo=FALSE>>=
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(gridExtra)
+@
+
+\section{Redes neuronales recurrentes}
+
+Las redes neuronales que se han explicado hasta ahora, con excepción de las redes convolucionales 3D, son incapaces de procesar secuencias de datos, por ejemplo, una secuencia de palabras, una secuencia de imágenes (vídeos), una conversación o un audio. En una secuencia de datos, los datos están correlacionados, un dato de la secuencia depende de los datos anteriores a este, las redes que se han explicado hasta ahora no están diseñadas para procesar secuencias, procesan cada dato de entrada individualmente, es decir, la salida de los datos de entrada no depende de los datos previamente procesados por la red, estas redes neuronales no toman en cuenta el resultado o entrada anterior, aprenden características de los datos, pero no les importan los datos previos para calcular la salida de una nueva entrada, lo cual las hace ineficientes para tratar secuencias de datos. Las redes neuronales recurrentes son un tipo de red neuronal para el procesamiento de secuencias de datos, se especializan en procesar secuencias de valores \cite{deep}, como textos, vídeos, audio, música, también son capaces de generar nuevas secuencias y procesan secuencias de datos de longitud variable, lo cual las hace ideales para resolver problemas relacionados al procesamiento del lenguaje natural.
+
+Los datos de entrada de las redes que se explicaron previamente, fluyen en una sola dirección, desde la capa de entrada hasta la capa de salida, una red neuronal recurrente se parece mucho a este tipo de redes, excepto que tiene conexiones cíclicas de retroalimentación. Una red recurrente procesa una secuencia de datos iterando a través de sus elementos y manteniendo información de todas las entradas que ha procesado previamente, esta información se conoce como estado oculto (\textit{hidden state}) \cite{chollet}. El estado oculto puede ser visto como una memoria que le permite a la red mantener información de las entradas previas. Las redes recurrentes utilizan estas conexiones cíclicas que tienen, para enviar el estado oculto nuevamente a la red, es decir, utilizan el estado oculto anterior para alimentarse a sí mismas. Este estado oculto se restablece cuando se procesa otra secuencia, cada secuencia de datos es un dato de entrada a la red, lo que hace internamente la red es iterar sobre cada elemento de la secuencia \cite{chollet}. En la figura \ref{rnn} se puede apreciar el ciclo de retroalimentación en una red neuronal recurrente.
+
+\begin{figure}[h]
+  \scalebox{0.2}{\includegraphics{img/rnn.png}}
+\caption{Red neuronal recurrente}
+\label{rnn}
+\end{figure}
+
+Una secuencia de datos es un conjunto de valores que tienen un orden, cambian en cada instante de tiempo $t$ y que solo tienen significado cuando se analizan en conjunto. Una red recurrente recibe como entrada una secuencia de datos $x^{(1)},..,x^{(\tau)}$, esta secuencia contiene vectores $x^{(t)}$ donde el instante de tiempo $t$ va de $1$ a $\tau$. El instante de tiempo $t$ no se refiere literalmente al paso del tiempo en el mundo real, sino a la posición que tiene ese dato en la secuencia \cite{deep}.
+
+Una red recurrente itera sobre una secuencia y en cada instante tiempo $t$, utiliza las entradas $x^{(t)}$ y el estado oculto anterior $h^{(t-1)}$, para calcular el nuevo estado oculto de la red $h^{(t)}$. Una vez calculado el nuevo estado oculto se utiliza para calcular la salida de la red $y^{(t)}$, este estado oculto se enviará nuevamente a la red en el siguiente instante de tiempo, lo que quiere decir que las neuronas están conectadas a sí mismas a través del tiempo. En el primer instante de tiempo, el estado oculto anterior no existe, por lo tanto, se inicializa un vector con todos sus elementos en cero llamado estado inicial \cite{chollet}. El estado oculto le permite a la red compartir información en diferentes instantes de tiempo, esto se traduce en una especie de memoria, que mantiene información relevante acerca de las entradas previamente procesadas por la red, es justamente esta memoria lo que le permite a la red aprender la correlación que existe entre los datos de una secuencia, lo cual hace que las redes recurrentes sean ideales para resolver problemas relacionados con secuencias de datos.
+En la figura \ref{rnntt} se presenta visualmente el trabajo de una red recurrente en el eje temporal, este concepto se conoce como desplegar la red a través del tiempo, es la misma red representada en cada instante de tiempo $t$ \cite{hands}.
+
+\begin{figure}[h]
+  \scalebox{1}{\includegraphics{img/rnntt.png}}
+\caption{Red neuronal recurrente desplegada a tráves del tiempo}
+\label{rnntt}
+\end{figure}
+
+Como se puede observar las redes recurrentes tienen dos salidas y dos entradas, las salidas de la red se calculan de manera similar a una red neuronal con alimentación hacia adelante, las fórmulas son las siguientes:
+
+\[
+h^{(t)} = f(W_hh^{(t-1)} + W_xx^{(t)} + b_h)
+\]
+
+\[
+y^{(t)} = f(W_yh^{(t)} + b_y)
+\]
+
+Se utiliza la entrada $x^{(t)}$, el estado oculto anterior $h^{(t-1)}$ y el sesgo $b_h$, para calcular $h^{(t)}$, $W_x$ es la matriz que contiene los parámetros de la entrada en el instante de tiempo actual, $W_h$ es la matriz que contiene los parámetros del estado oculto anterior. Para calcular $y^{(t)}$ se utiliza el estado oculto que se acaba de calcular mas el sesgo $b_y$, $W_y$ es la matriz de parámetros de la salida en el instante de tiempo actual. Finalmente $f$, es la función de activación la cual puede ser una tangente hiperbólica o la función RELU.
+
+En las redes recurrentes también se deben ajustar estas matrices de parámetros, para que la red sea capaz de aprender y realizar mejores predicciones en el futuro, lo cual se logra aplicando el algoritmo de retroprogación a la red desplegada a través del tiempo, el uso del algoritmo de retroprogación en esta versión desplegada de la red, se conoce como algoritmo de retropropagación a través del tiempo \textit{back-propagation through time} (BPTT) \cite{deep}.
+
+A pesar de que las redes recurrentes se especializan en procesar secuencias de datos, no son capaces de aprender dependencias a largo plazo, es decir, secuencias de datos muy grandes, esto se debe a que los gradientes que se propagan tienden a desvanecerse o explotar \cite{deep}. Como se explicó anteriormente, el algoritmo de retropropagación propaga el error desde la capa de salida hasta la capa de entrada, para calcular el gradiente y ajustar los parámetros con el algoritmo del gradiente del descenso. Como se explica en \cite{hands} el gradiente se va volviendo cada vez más pequeño a medida que se va propagando el error hacia las primeras capas de la red, lo que tiene como consecuencia que las primeras capas ajusten poco o nada sus parámetros, haciendo que la red no aprenda en la fase de entrenamiento y no converja a un buen resultado, este problema se conoce como desvanecimiento del gradiente. Lo opuesto también puede suceder, los gradientes pueden llegar a tener valores muy elevados haciendo que los ajustes de los parámetros sean muy grandes, teniendo como consecuencia que la red nunca llegue a optimizar la función de perdida, este problema se conoce como gradientes explosivos.
+
+Cabe destacar que estos problemas no lo sufren solo las redes recurrentes, sino las redes neuronales en general, en especial aquellas que son muy profundas, los investigadores han desarrollado múltiples técnicas para atacar estos problemas, sin embargo, siguen siendo unos de los retos principales del aprendizaje profundo \cite{deep}.
+
+Otro problema que tienen las redes recurrentes es que al procesar secuencias muy largas descartan la información de los primeros datos de entrada, tienen memoria a corto plazo, lo cual les impide aprender dependencias a largo plazo. Para resolver las dificultades que tienen las redes recurrentes y permitirles aprender dependencias a largo plazo se crearon otros tipos de redes recurrentes llamadas \textit{Long Short Term Memory} (LSTM) y \textit{Gated Recurrent Units} (GRU).
+
+\subsection{LSTM y GRU}
+
+Conocidas como \textit{gated recurrent neural networks}, son los modelos más efectivos para tratar con secuencias de datos muy grandes, funcionan de igual manera que las redes recurrentes pero son capaces de aprender dependencias a largo plazo, lo logran creando caminos a través del tiempo para que el gradiente fluya sin que se desvanezca o explote \cite{deep}.
+
+Estas redes introducen un mecanismo de puertas que se encargan de controlar el flujo de la información, estas puertas aprenden que información eliminar y que información añadir al estado oculto. La idea de introducir caminos para que el gradiente fluya y así evitar el problema del desvanecimiento del gradiente fue una contribución de las redes recurrentes LSTM \cite{deep}. Estas redes tienen un componente clave llamado estado de la celda (\textit{cell state}), el cual sirve de camino para que la información fluya fácilmente de un instante de tiempo a otro.
+
+Cada celda de una red neuronal LSTM tiene los mismos datos de entrada y datos de salida que una red recurrente, sin embargo, tienen más parámetros y el mecanismo de puertas que controla la información \cite{deep}.
+
+Estas puertas se dividen en tres:
+
+\begin{itemize}
+\item Puerta de olvidar: Esta puerta controla que información debe ser borrada del estado de la celda.
+\item Puerta de entrada: Decide que información de los datos de entrada añadir al estado de la celda.
+\item Puerta de salida: Esta puerta decide que información del estado de la celda y de los datos de entrada va ir a la salida de la red y al estado oculto.
+\end{itemize}
+
+Las redes LSTM aprenden a reconocer de los datos de entrada que olvidar, que almacenar, como combinar estos datos para obtener una salida y preservarlos durante el tiempo que sea necesario, lo que le permite a la red capturar dependencias a largo plazo, por eso estas redes son tan exitosas en problemas relacionados con el análisis de sentimientos, la traducción automática, procesamiento del audio, entre otros. Las redes recurrentes GRU son una versión simplificada de las LSTM, la diferencia principal es que una sola puerta se encarga simultáneamente de eliminar información y actualizar el estado de la celda, al ser más simples son más rápidas en su entrenamiento.
+
+A lo largo de los años se han diseñado múltiples variantes de redes recurrentes, sin embargo, en múltiples investigaciones se ha demostrado que ninguna de estas variantes supera a las LSTM y GRU en una amplia gama de tareas \cite{deep}, las redes LSTM y GRU son la razón principal del éxito de las redes neuronales recurrentes en problemas del PLN.
+
+\subsection{Redes recurrentes bidireccionales}
+
+Las redes recurrentes dependen del orden, procesan cada dato de la secuencia de entrada en orden, alterar este orden, cambia por completo las representaciones que la red extrae de la secuencia. Estas redes tienen una estructura “causal”, lo que quiere decir que en cada instante de tiempo $t$ la red solo aprende información de los datos previos y la entrada actual \cite{deep}. Esto hace que estas redes sean ideales para resolver problemas de predicción de series de tiempo, sin embargo, no las hace ideales para resolver algunos problemas del PLN. Por ejemplo, en el reconocimiento de voz, la correcta interpretación del fonema actual, depende no solo de las palabras anteriores si no de las palabras posteriores, porque puede suceder que dos sonidos sean muy similares y la única forma de superar esa ambigüedad, es ver cuáles son los fonemas que hay más adelante, las redes recurrentes bidireccionales fueron creadas para resolver esta necesidad.
+
+Una red recurrente bidireccional consiste en utilizar dos redes recurrentes LSTM o GRU, cada una procesando la secuencia de datos en una dirección, una  hacia adelante, es decir, desde el principio de la secuencia hasta el final  y otra hacia atrás, desde el final hasta el principio de la secuencia, luego se combinan los resultados de ambas redes en cada instante de tiempo, al procesar una secuencia de datos en ambas direcciones se pueden capturar patrones que una red recurrente convencional puede pasar por alto \cite{chollet}. Las redes bidireccionales no solo toman en cuenta información previa sino también información posterior al instante de tiempo $t$. En la figura \ref{birnn} se puede observar una red neuronal bidireccional.
+
+\begin{figure}[h]
+  \scalebox{0.7}{\includegraphics{img/birnn.png}}
+\caption{Red neuronal recurrente bidireccional}
+\label{birnn}
+\end{figure}
+
+Una red recurrente bidireccional combina una red recurrente que va hacia adelante en el tiempo y otra red recurrente que va hacia atrás.
+
+Todas las redes neuronales que se han explicado hasta ahora hacen que el aprendizaje profundo sea uno de los campos más interesantes y con más investigaciones del mundo de la inteligencia artificial, es por mucho la técnica más utilizada en todas las aplicaciones comerciales relacionadas con el reconocimiento de imágenes, la generación de lenguajes naturales, la traducción de idiomas, vehículos autónomos, entre otras aplicaciones, el aprendizaje profundo es ideal para resolver problemas de visión por computadora y procesamiento del lenguaje natural, por eso es la técnica que se utilizará a lo largo de este documento para atacar el desafiante problema de la lectura de labios en español.

@@ -1,0 +1,24 @@
+% !Rnw root = 000proyecto.Rnw
+
+<<echo=FALSE>>=
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(gridExtra)
+@
+
+
+\section{Aprendizaje profundo}
+
+El aprendizaje profundo es un subcampo del aprendizaje automático, que le permite a la computadora aprender de experiencias previas y entender el entorno en términos de una jerarquía de conceptos, donde cada concepto es definido en términos de su relación con conceptos más simples \cite{deep}. Las redes neuronales multicapa, en especial aquellas que tienen un gran número de capas ocultas, también conocidas como redes neuronales profundas, son el ejemplo más importante de un modelo de aprendizaje profundo, estas redes aprenden a realizar representaciones complejas de los datos a partir de representaciones más simples. Cada neurona de la red se encarga de aprender características distintas de la entrada.
+
+El aprendizaje profundo estudia este tipo de redes, busca crear arquitecturas de redes neuronales profundas para generar modelos que sean capaces de abordar problemas de gran envergadura. Como se explicó anteriormente una neurona por sí sola no puede resolver problemas muy complejos, lo mismo sucede con las capas de una red neuronal, una sola capa no puede resolver problemas como el reconocimiento del habla o el reconocimiento de objetos en imágenes. Por ello se crean arquitecturas de múltiples capas, las primeras capas se encargan de aprender características generales de los datos de entrada mientras que las capas posteriores aprenden características más específicas de los datos. Por ejemplo, dada una imagen de entrada, la primera capa de una red se podría encargar de detectar bordes, la segunda capa podría detectar esquinas y contornos más definidos, a partir de los bordes y finalmente una tercera capa podría reconocer objetos enteros, a partir de una colección de esquinas y contornos \cite{deep}. En la figura \ref{hiearchy-learning} se muestra como un modelo de aprendizaje profundo, puede representar el concepto de un gato mediante la combinación de conceptos más simples, como líneas, contornos, esquinas entre otros.
+
+\begin{figure}[h]
+  \scalebox{0.7}{\includegraphics{img/deep-learning.png}}
+\caption[Aprendizaje profundo]{Aprendizaje profundo. Modificado de \cite{chollet}.}
+\label{hiearchy-learning}
+\end{figure}
+
+El aprendizaje profundo hace énfasis en este aprendizaje por capas sucesivas de representaciones significativas \cite{chollet}, en las capas ocultas se aprenden representaciones de los datos que se expresan en términos de otras representaciones más simples, esto permite reconocer conceptos complejos en términos de otros más simples.
+
+Para concluir el aprendizaje profundo es un tipo de aprendizaje automático que logra gran poder y flexibilidad al aprender a representar el mundo como una jerarquía de conceptos, con representaciones más abstractas en términos de las menos abstractas, siendo el núcleo de todo esto las redes neuronales profundas. El aprendizaje profundo ha demostrado ser muy útil en varias disciplinas de la ingeniería de software como la visión por computadora, el procesamiento del habla y audio, procesamiento del lenguaje natural, robótica, entre otros. A continuación, se explicará como se utilizan el aprendizaje profundo y las redes neuronales profundas en los campos de visión por computadora y el procesamiento del lenguaje natural.

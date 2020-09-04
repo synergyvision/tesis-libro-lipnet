@@ -184,9 +184,6 @@
 \frontmatter
 
 \SweaveInput{001titulo.Rnw}
-%\includepdf[page=-]{veredicto-MSc.pdf}
-%\SweaveInput{002jurado.Rnw}
-%\SweaveInput{005resumen.Rnw}
 \SweaveInput{004agradecimiento.Rnw}
 \SweaveInput{003dedicatoria.Rnw}
 
@@ -212,10 +209,15 @@
 
 \SweaveInput{010intro.Rnw}
 \SweaveInput{020antecedentesymotivacion.Rnw}
-\SweaveInput{021marcoindustrial-aws.Rnw}
+%\SweaveInput{021marcoindustrial-aws.Rnw}
 \SweaveInput{022marcoteorico-aprendizaje.Rnw}
 \SweaveInput{023marcoteorico-NN.Rnw}
+\SweaveInput{024marcoteorico-DL.Rnw}
 \SweaveInput{024marcoteorico-CNN.Rnw}
+\SweaveInput{024marcoteorico-3DCNN.Rnw}
+\SweaveInput{024marcoteorico-PLN.Rnw}
+\SweaveInput{024marcoteorico-RNN.Rnw}
+\SweaveInput{023marcoteorico-LipReading.Rnw}
 \SweaveInput{030metodologia.Rnw}
 \SweaveInput{040resultados.Rnw}
 

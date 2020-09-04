@@ -57,6 +57,6 @@ Como parte de los requisitos para optar al título de
 \hspace{2.5cm} \textbf{PROFESOR GUÍA} \hspace{1.7cm} \textbf{Alexander Ramírez}
 
 \vspace{0.2cm}
-\hspace{2.5cm} \textbf{FECHA} \hspace{4.1cm} \textbf{Julio 2020}
+\hspace{2.5cm} \textbf{FECHA} \hspace{4.1cm} \textbf{ 2020}
 
 \newpage

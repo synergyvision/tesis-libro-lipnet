@@ -43,6 +43,74 @@ P. Perez, “Lectura labiofacial” Logopedaencasa, 2013. [En línea]. Disponibl
 “Conjuntos de entrenamiento y prueba: Separación de datos” Developers Google. [En
 línea]. Disponible en: \href{https://bit.ly/2q2ycln}{https://bit.ly/2q2ycln}. [Accedido: 6-oct-2019]
 
+\bibitem{samuel}
+A. L. Samuel, “Some studies in machine learning using the game of checkers” IBM Journal of Research and Development, 1959, pp. 210-229.
+
+\bibitem{mitchell}
+T. M. Mitchell, “Machine Learning” McGraw-Hill, New York, 1997.
+
+\bibitem{chollet}
+F. Chollet, “Deep Learning with python”, Manning, 2018.
+
+\bibitem{alex}
+A. Ramírez, “Estudio de los métodos de aprendizaje estadístico provistos por Amazon Web Services e implementación de redes neuronales convolucionales para el reconocimiento de patrones visuales con Amazon DeepLens”, Universidad Central de Venezuela, 2019.
+
+\bibitem{deep}
+I. Goodfellow, Y. Bengio, A. Courville, “Deep Learning”, MIT Press, 2016.
+
+\bibitem{hands}
+A. Géron, “Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow”, O'Reilly, 2019.
+
+\bibitem{statical-learning}
+G. James, D. Witten, T. Hastie, y R. Tibshiriani, “An Introduction to Statistical Learning”, Springer, 2013.
+
+\bibitem{neuron}
+A. C. Damask, C. E. Swenberg,  “Synapse, Neuron, Brain”, Academic Press Inc, 1984.
+
+\bibitem{datos-aleatorios}
+E. B. González, “Reconstrucción de data caótica mediante métodos basados en redes neuronales artificiales y dinámicas no lineales”, Universidad Católica Andrés Bello, 2002.
+
+\bibitem{neuron-2}
+S. Haykin, “Neural networks. A comprehensive foundation”, Prentice Hall, 1999.
+
+\bibitem{fundamentals-neural}
+L. V. Fausett, “Fundamentals of neural networks. Architectures, algorithms, and applications”, Prentice Hall, 1993.
+
+\bibitem{ml-book}
+M. A. Nielsen, “Neural Networks and Deep Learning”, Determination Press, 2015.
+
+\bibitem{modelo-computacional}
+A. Fernández, “Desarrollo de un modelo computacional para un sistema de reconocimiento de matrículas a través de una imagen proveniente de una cámara de tráfico”, Universidad Central de Venezuela, 2011.
+
+\bibitem{dl-cv}
+R. Shanmugamani, “Deep Learning for Computer Vision”, Packt Publishing Ltd, 2018.
+
+\bibitem{dl-python}
+A. Rosebrock, “Deep Learning for Computer Vision with Python”, PyImageSearch, 2017.
+
+\bibitem{Lecun-Net}
+Y. Lecun, P. Haffner, L. Bottou, Y. Bengio, “Object Recognition with Gradient-Based Learning”, ATT Shannon Lab, 1998.
+
+\bibitem{3d-conv}
+D. Tran, H. Wang, L. Torresani, J. Ray, Y. Lecun, M. Paluri, “A Closer Look at Spatiotemporal Convolutions for Action Recognition”, Facebook Research, 2018.
+
+\bibitem{human-recognition}
+S. Ji, W. Xu, M. Yang, K. Yu, “3D Convolutional Neural Networks for Human Action Recognition”, IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 35, NO. 1, 2013.
+
+\bibitem{spatiotemporal}
+D. Tran, L. Bourdev, R. Fergus, L.Torresani, M. Paluri, “Learning Spatiotemporal Features with 3D Convolutional Networks”, Facebook AI Research, 2015.
+
+\bibitem{vsr}
+Ahmad B. A. Hassanat, “Visual Speech Recognition”, IT Department, Mu'tah University, 2011.
+
+\bibitem{NLP}
+L. Deng, Y. Liu, “Deep Learning in Natural Language Processing”, Springer, 2018.
+
+\bibitem{survey-lip}
+A. Fernandez-Lopez, F. Sukno, “Survey on Automatic Lip-Reading in the Era of Deep Learning”, Imavis, 2018.
+
+\bibitem{lr-wild}
+J. Chung, A. Zisserman, “Lip Reading in the Wild”, Visual Geometry Group, Department of Engineering Science, University of Oxford, 2017.
 %9
 \bibitem{factormachines}
 Factorization Machines,

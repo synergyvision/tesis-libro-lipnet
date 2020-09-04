@@ -10,377 +10,111 @@ library(gridExtra)
 \section{Redes Neuronales}
 
 \subsection{Modelo biológico}
-Las Redes Neuronales engloban una familia de modelos de aprendizaje supervisado que parte de un modelo del funcionamiento del cerebro biológico. También se conocen como modelos coneccionistas ya que consisten en la conexión de neuronas en configuración de redes con múltiples capas.
-
-Las Redes Neuronales son un modelo de regresión no lineal, con respuestas simples o de clasificación, es decir con respuestás múltiples, que consiste en una red de nodos, denominados neuronas. Dichas neuronas modelan el funcionamiento de las neuronas cerebrales. Las neuronas reciben información de las capas previas y aplican una función de activación para modelar respuestas no lineales. Las redes incluyen varias capas que consisten en varias neuronas que representan nuevas características (features) sobre los datos.
-Es un modelo de aprendizaje supervisado que recibe un conjunto de datos etiquetados con los cuales se puede contrastar las respuestas del modelo para realizar un proceso de ajuste que minimice la distancia entre el valor estimado y los valores observados.
+Como explican los autores en \cite{neuron} una neurona es una célula nerviosa, que tiene diferentes formas, pero que se caracteriza por tener una estructura de fibras finas muy parecidas a las ramas de un árbol, llamadas dendritas, también tiene una fibra larga llamada axón. Las neuronas son responsables de transmitir y recibir información, para conseguirlo intercambian señales eléctricas a través de pequeños sitios en el cuerpo de la neurona, conocidos como sinapsis. Las neuronas reciben impulsos sensoriales del mundo exterior y son responsables de procesar estas señales para así generar una salida, que puede ser el movimiento de los músculos, pensamientos, palabras, entre otros. Pero una sola neurona no puede realizar todo este trabajo, el poder de las neuronas radica en transmitir estos impulsos sensoriales de una neurona a otra. Las neuronas están conectadas entre sí a través de los axones, las dendritas y las sinapsis. En la figura \ref{neurona} se puede apreciar la estructura de una neurona biológica.
 
 \begin{figure}[h]
-  \scalebox{1.25}{\includegraphics{img/intro.png}}
-\caption{Modelo matemático de una neurona biológica}
+  \scalebox{0.8}{\includegraphics{img/neuron-structure.png}}
+\caption[Estructura de una neurona biológica]{Estructura de una neurona biológica \cite{datos-aleatorios}.}
 \label{neurona}
 \end{figure}
 
-En el modelo biológico de una reurona, que se puede visualizar en la figura \ref{neurona}, partimos de las entradas $X=(x_1,..,x_p)$ y los pesos o variables $W=(w_1,..,w_p)$, se realiza la combinación lineal entre $W$ y $X$, $W^T X$ y al resultado de la combinación lineal le sumamos el sesgo, quedando $\sum_{i}w_i x_i+b$ y luego aplicamos una función de activación $f$ que genera el resultado de la neurona, $f(\sum_{i}w_i x_i+b)$. Los axones generan las entradas y las dendritas le dan importancia a dicho axón a través de las variables $w_i$, en el núcleo de la neurona se combinan las entradas con las variables y se agrega el sesgo y luego se aplica la función de activación que genera los valores de salida del axón de la neurona. Como se puede apreciar la salida de una neurona se puede conectar con la entrada de otra neurona y por ello es posible configurarlas en redes interconectadas.
+Las neuronas y las conexiones entre ellas constituyen la clave para el procesamiento de la información \cite{neuron-2}. Las dendritas se encargan de recibir los impulsos sensoriales de otras neuronas. Estos impulsos viajan a través de los axones, que sirven como transmisores de estas señales. Los axones de una neurona están conectados a las dendritas de otra y a esta región de conexión se le llama sinapsis. Cuando hay un conjunto de neuronas conectadas entre sí, se conoce como circuito neuronal o red neuronal. Mas allá de lo teórico las conexiones e interacciones entre las neuronas de un individuo, definen como este responde a los estímulos externos, define su comportamiento, como aprende y otras conductas propias de un ser inteligente.
 
-\subsection{Redes Neuronales Multicapa}
+Al igual que los pájaros inspiraron al ser humano a volar, las redes neuronales biológicas inspiraron uno de los algoritmos más poderosos en el campo del aprendizaje automático, las redes neuronales artificiales. Como se explicará más adelante para llevar a cabo su funcionamiento las redes neuronales artificiales, tienen una serie de unidades de cómputo llamadas neuronas, que permiten a una máquina aprender de experiencias previas, a lo largo de este documento se utilizará el término redes neuronales para hacer referencia a este algoritmo. A pesar de que las redes neuronales se inspiraron en su par biológico se han vuelto bastante diferentes a estas, tanto así que muchos científicos del área han criticado que se utilice el término de red neuronal \cite{hands}, sin embargo, las redes neuronales artificiales buscan simular el funcionamiento de las redes biológicas, el mismo funcionamiento que le permite a un ser humano aprender.
 
-Vamos a revisar el modelo de estimación y ajuste de las Redes Neuronales Multicapa desarrollando en detalle el ejemplo proporcionado por Hastie et al en \cite{Hastie-et-al-2016}. Vamos a revisar los cálculos para realizar la etapa de estimación también conocido como paso de alimentación hacia adelante (feed forward) y luego el proceso de ajuste de parámetros tambien conocido como propagación (de errores) hacia atrás (back propagation). Esta terminología surge del hecho de que las Redes Neuronales en este caso son un grafo dirigido acíclico, es decir, los nodos están conectados con las siguientes capas sólamente.
+\subsection{Redes Neuronales artificiales}
 
-\subsubsection{Estimación}
+Como se explica en \cite{fundamentals-neural} una red neuronal es “un sistema de procesamiento de información que tiene algunas características de rendimiento en común con las redes neuronales biológicas. Fueron desarrolladas como generalizaciones de modelos matemáticos de la cognición humana o la biología neuronal”, estos sistemas de procesamiento de información permiten la resolución de problemas que no pueden ser resueltos con un enfoque tradicional. Las redes neuronales engloban una familia de algoritmos de aprendizaje supervisado, que buscan simular el comportamiento biológico de las neuronas \cite{alex}. Presentan características como la capacidad de aprender, de generalizar y de abstracción. La intención de las redes neuronales no es modelar exactamente su par biológico sino las características más relevantes.
 
-Partiendo del modelo especificado en \cite{Hastie-et-al-2016} vamos a desarrollar el modelo de una Red Neuronal de una capa oculta siguiendo el diagrama \ref{multicapa}, vamos a plantear los cálculos y las formulas de estimación y ajuste de la red.
+Una red neuronal consiste de un largo número de unidades de cómputo simples llamadas neuronas, también conocidas en la literatura como unidades, células o nodos. Cada neurona está conectada a otra neurona a través de enlaces de comunicación dirigida, cada uno con un peso asociado \cite{fundamentals-neural}. Los pesos representan la información que usa la red para resolver un problema. Para comprender mejor esta idea en la figura \ref{artificial-neuron} se presenta un modelo matemático de una neurona biológica y sus elementos.
 
 \begin{figure}[h]
-  \scalebox{1}{\includegraphics{img/modelomulticapa.png}}
-\caption{Red Neuronal Multicapa}
-\label{multicapa}
+  \scalebox{0.7}{\includegraphics{img/neuron.png}}
+\caption{Modelo matemático de una neurona biológica.}
+\label{artificial-neuron}
 \end{figure}
 
-Para clasificar en $K$-clases tenemos una capa de salida de $K$ unidades, donde la $K$-ésima unidad modela la probabilidad de que las entradas $X$ pertenecen a la clase $K$. Es por ello que hay $K$ medidas, cada una codificada como variables $0-1$ para la $K$-ésima clase. Las características derivadas son una combinación lineal de los datos de entrada y los pesos $\alpha_{ij}$.
+Cada neurona recibe una serie de entradas $X=(x_1,..,x_i)$, que equivalen a las dendritas recibiendo estímulos externos en una neurona biológica, luego están las conexiones conocidas como pesos o parámetros $W=(w_1,..,w_i)$, que representan las sinapsis de su par biológico. Estos pesos son cruciales en el proceso de aprendizaje, se van ajustando en el entrenamiento de la red y a medida que esto pasa la red decide a que entradas darle más importancia. Con estas entradas y pesos se realiza una combinación lineal, que no es más que la suma ponderada de estos dos elementos, al resultado de esta combinación se le suma el sesgo $b$ quedando $\sum_{i}w_i x_i+b$, luego se aplica una función de activación $f$ que genera el resultado final $y_i$ de la neurona. Este resultado depende de cada uno de estos elementos y se puede expresar de la siguiente forma:
+\[y_i=f(\sum_{i}w_i x_i+b)\]
 
-Supongamos que tenemos una red neuronal que consta de una capa oculta con $M$ neuronas y que hay $K$ objetivos de clasificación o funciones finales. El vector de entrada lo llamaremos $X$, es un vector con $p$ componentes, $X=[X_1\ X_2\ ...\ X_p]^T$, cuando estamos tratando con los datos se denota en minúsculas.
+La salida $y_i$ puede ser vista como el axón de una neurona biológica y sirve como entrada a otra neurona, las dendritas le dan importancia a dicho axón a través de las sinapsis $w_i$, dentro de la neurona se combinan las entradas con los pesos y se suma el sesgo para luego aplicar una función de activación, la salida de una neurona se puede conectar a la entrada de otra y por ello es posible conectarlas en redes \cite{alex}. Esto tiene sentido porque una sola neurona, no sería capaz de resolver problemas tan complejos como el reconocimiento del habla. El poder de las redes neuronales se encuentra en combinar estas neuronas para obtener modelos más complejos que le permitan atacar problemas de mayor envergadura.
 
-Las características o neuronas en la capa oculta son creadas como la aplicación de una función de activación a una combinación lineal de las entradas, llamaremos a estas $Z_1,Z_2, ...,Z_M$, a partir de estas se calculan las salidas $Y_1,...,Y_K$ que son el resultado de aplicar una función de activación a una combinación lineal de las salidas de la capa oculta $Z_1,Z_2, ...,Z_M$.
+Esta idea que se acaba de explicar del funcionamiento de una red neuronal tiene sus bases en un tipo de red neuronal artificial llamada perceptrón. Los perceptrones fueron desarrollados en las décadas de 1950 y 1960 por el científico Frank Rosenblatt, inspirado por trabajos anteriores de Warren McCulloch y Walter Pitts \cite{ml-book}. A pesar de que en su momento este algoritmo genero gran expectativa en la comunidad científica, pronto se dieron cuenta de sus debilidades, era incapaz de resolver problemas como una compuerta lógica XOR, el cual se considera un problema trivial \cite{hands}. El problema con los perceptrones estaba en que eran modelos de clasificación lineal, cada salida era lineal, por lo cual eran incapaces de aprender patrones complejos, sin embargo, los científicos lograron resolver el problema de la compuerta lógica XOR, apilando múltiples perceptrones en capas, este concepto se conoció como perceptrón multicapa \cite{hands}. Aún así, los perceptrones quedaron en el olvido, porque seguían siendo incapaces de resolver otros problemas más complejos.
 
-La función de activación que usaremos en las capas ocultas la denotaremos por $\sigma(\nu)$ y para la salida se aplica una función $g_k(T)$.
+Uno de los puntos claves de las redes neuronales para lograr superar las deficiencias del perceptrón y así resolver problemas de mayor envergadura, es la función de activación. Esta función lo que hace es transformar la suma ponderada mediante funciones no lineales, lo que le permite a la red utilizar efectivamente los resultados de las neuronas que la componen, hace que las redes puedan dar respuestas no lineales, convirtiéndolas en un modelo no lineal y dotándole de versatilidad, potencia y escalabilidad, lo cual hace que sean ideales para abordar problemas más complejos. En la figura \ref{activation-functions-m} se pueden observar algunas funciones de activación.
 
-Comencemos definiendo las funciones que están involucradas en la capa oculta. Cada neurona de la capa oculta tendrá la siguiente representación,
-\begin{center}
-\begin{array}{rl}
-Z_1 & = \sigma( \alpha_{01}b_1+\alpha_{11}x_1+\alpha_{21}x_2+\alpha_{31}x_3+...+\alpha_{p1}x_p)\\
-Z_2 & = \sigma( \alpha_{02}b_1+\alpha_{12}x_1+\alpha_{22}x_2+\alpha_{32}x_3+...+\alpha_{p2}x_p)\\
-Z_3 & = \sigma( \alpha_{03}b_1+\alpha_{13}x_1+\alpha_{23}x_2+\alpha_{33}x_3+...+\alpha_{p3}x_p)\\
-\vdots & = \quad \quad \vdots\\
-Z_M & = \sigma( \alpha_{0M}b_1+\alpha_{1M}x_1+\alpha_{2M}x_2+\alpha_{3M}x_3+...+\alpha_{pM}x_p),
-\end{array}
-\end{center}
+\begin{figure}[h]
+  \scalebox{1.25}{\includegraphics{img/activaction-functions-m.png}}
+\caption{Funciones de activación.}
+\label{activation-functions-m}
+\end{figure}
 
-donde $\alpha_{ij}$ denota el parámetro que corresponde a la entrada $i$ y llega a la neurona $j$ de la capa oculta.
+Como se puede entender de estas definiciones una neurona por sí sola no es capaz de resolver problemas de gran envergadura, pero configuradas en una red son capaces de realizar representaciones más complejas de los datos a partir de representaciones más simples \cite{alex}, para lograr esto las redes incluyen varias capas de neuronas que representan nuevas características de los datos, como se explicará continuación.
+\subsection{Redes neuronales multicapa}
 
-Adicionalmente supongamos de entrada que $b_1=1$, así nos queda,
-\begin{center}
-\begin{array}{rl}
-Z_1 & = \sigma( \alpha_{01}+\alpha_{11}x_1+\alpha_{21}x_2+\alpha_{31}x_3+...+\alpha_{p1}x_p)\\
-Z_2 & = \sigma( \alpha_{02}+\alpha_{12}x_1+\alpha_{22}x_2+\alpha_{32}x_3+...+\alpha_{p2}x_p)\\
-Z_3 & = \sigma( \alpha_{03}+\alpha_{13}x_1+\alpha_{23}x_2+\alpha_{33}x_3+...+\alpha_{p3}x_p)\\
-\vdots & = \quad \quad \vdots\\
-Z_M & = \sigma( \alpha_{0M}+\alpha_{1M}x_1+\alpha_{2M}x_2+\alpha_{3M}x_3+...+\alpha_{pM}x_p).
-\end{array}
-\end{center}
+También conocidas como redes neuronales con alimentación hacia adelante, (\textit{feedforward neural network}) o perceptrón multicapa, son redes que están conformadas por múltiples capas, una capa es un término que hace referencia a una colección de neuronas. Estos modelos son llamados también con alimentación hacia adelante, porque la información fluye en una dirección, las capas están ordenadas por el orden en que reciben la señal, desde la entrada hasta la salida y están unidas en ese orden \cite{deep}. Estas redes solo tienen conexiones entre capas hacia delante. Esto último quiere decir que en este tipo configuración no existen ciclos o conexiones de retroalimentación, más adelante se explicará una extensión de estas redes, donde los ciclos de retroalimentación son posibles.
 
-Utilizando la notación vectorial y tomando una neurona fija $Z_m$ con $1\leq m\leq M$, los parámetros correspondientes se encuentran en el vector fila $\alpha_m^T = [\alpha_{1m}\ \alpha_{2m}\ ...\ \alpha_{pm}]$, donde el vector de entrada es $X=[x_1\ x_2\ ...\ x_p]^T$, el producto entre el vector $\alpha_m^T$ y $X$ queda,
-\begin{center}
-\begin{array}{rl}
-\alpha_m^T X & = \begin{bmatrix} \alpha_{1m} & \alpha_{2m} & ... & \alpha_{pm}\end{bmatrix} \begin{bmatrix} x_1\\ x_2 \\ \vdots \\x_p\end{bmatrix} \\
-\alpha_m^T X & = \alpha_{1m}x_1+\alpha_{2m}x_2+\alpha_{3m}x_3+...+\alpha_{pm}x_p=\sum_{i=1}^p \alpha_{im}x_{i}.
-\end{array}
-\end{center}
+En las redes neuronales multicapa cada una de las neuronas realizan el cálculo mencionado anteriormente y propagan este resultado hacia las siguientes neuronas, hasta llegar a la capa de salida donde se calcula el resultado final de la red neuronal, es decir, el dato estimado, este paso se conoce como alimentación hacia adelante (\textit{feedforward}) \cite{alex}. Antes de llegar a la capa de salida los datos de entrada deben pasar por una serie de transformaciones en lo que se conoce como capas ocultas y mucho antes de eso, los datos de entrada son recibidos en lo que se conoce como capa de entrada, en la figura \ref{red-neuronal-m}, se presenta un ejemplo de una red neuronal, donde se señalan todos estos elementos.
 
-Utilizando esta notación la neurona $Z_m$ queda de la siguiente manera,
-$$Z_m = \sigma( \alpha_{0m}+\alpha_{m}^T X).$$
-
-Así cada neurona $Z_m$ con $m=1,...,M$ nos queda,
-\begin{center}
-\begin{array}{rl}
-Z_1 & = \sigma( \alpha_{01}+\alpha_{1}^T X)\\
-Z_2 & = \sigma( \alpha_{02}+\alpha_{2}^T X)\\
-Z_3 & = \sigma( \alpha_{03}+\alpha_{3}^T X)\\
-\vdots & = \quad \quad \vdots\\
-Z_M & = \sigma( \alpha_{0M}+\alpha_{M}^T X).
-\end{array}
-\end{center}
-
-Para esta primera parte de la red neuronal se tienen que estimar $(p+1)\times M$ parámetros.
-
-Luego con estas salidas se generan los valores que se utilizan en la última capa, $Y_1,Y_2,...,Y_K$. A la combinanción lineal entre las salidas de las neuronas $Z_1,...,Z_M$ y los parámetros $\beta_{mk}$, le aplicamos una función de salida $g_k$, es decir,
-\begin{center}
-\begin{array}{rl}
-Y_1 & = g_k(\beta_{01}b_2+\beta_{11}Z_1+\beta_{21}Z_2+\beta_{31}Z_3+...+\beta_{M1}Z_M)\\
-Y_2 & = g_k(\beta_{02}b_2+\beta_{12}Z_1+\beta_{22}Z_2+\beta_{32}Z_3+...+\beta_{M2}Z_M)\\
-Y_3 & = g_k(\beta_{03}b_2+\beta_{13}Z_1+\beta_{23}Z_2+\beta_{33}Z_3+...+\beta_{M3}Z_M)\\
-\vdots & = \quad \quad \vdots\\
-Y_K & = g_k(\beta_{0K}b_2+\beta_{1K}Z_1+\beta_{2K}Z_2+\beta_{3K}Z_3+...+\beta_{MK}Z_M)
-\end{array}
-\end{center}
-
-Si $b_2=1$, nos queda,
-\begin{center}
-\begin{array}{rl}
-Y_1 & = g_k(\beta_{01}+\beta_{11}Z_1+\beta_{21}Z_2+\beta_{31}Z_3+...+\beta_{M1}Z_M)\\
-Y_2 & = g_k(\beta_{02}+\beta_{12}Z_1+\beta_{22}Z_2+\beta_{32}Z_3+...+\beta_{M2}Z_M)\\
-Y_3 & = g_k(\beta_{03}+\beta_{13}Z_1+\beta_{23}Z_2+\beta_{33}Z_3+...+\beta_{M3}Z_M)\\
-\vdots & = \quad \quad \vdots\\
-Y_K & = g_k(\beta_{0K}+\beta_{1K}Z_1+\beta_{2K}Z_2+\beta_{3K}Z_3+...+\beta_{MK}Z_M)
-\end{array}
-\end{center}
-
-Ahora, para un $k$ fijo, con $1\leq k\leq K$, sea $Z$ el vector de neuronas de la capa oculta, el producto entre $Z=[Z_1\ Z_2\ ...\ Z_M]^T$ y el vector de parámetros $\beta_k^T=[\beta_{1k}\ \beta_{2k}\ \beta_{3k}\ ...\ \beta_{Mk}]$ nos queda,
-\begin{center}
-\begin{array}{rl}
-\beta_k^T Z & = \begin{bmatrix} \beta_{1k} & \beta_{2k} & ... & \beta_{Mk}\end{bmatrix} \begin{bmatrix} Z_1\\ Z_2 \\ \vdots \\Z_M\end{bmatrix} \\
-\beta_k^T Z& = \beta_{1k}Z_1+\beta_{2k}Z_2+\beta_{3k}Z_3+...+\beta_{Mk}Z_M
-\end{array}
-\end{center}
-
-Así, las salidas $Y_k$ quedan de la forma siguiente,
-\begin{center}
-\begin{array}{rl}
-Y_k &= g_k(\beta_{0k}+\beta_{1k}Z_1+\beta_{2k}Z_2+\beta_{3k}Z_3+...+\beta_{Mk}Z_M) \\
-    &= g_k(\beta_{0k}+\beta_k^T Z) = g_k(T_k),
-\end{array}
-\end{center}
-
-donde $T_k=\beta_{0k}+\beta_k^T Z$. Utilizando esta notación tenemos,
-\begin{equation}
-\begin{array}{rl}
-Y_1 & = g_k(\beta_{01}+\beta_1^T Z) = g_k(T_1)\\
-Y_2 & = g_k(\beta_{02}+\beta_2^T Z) = g_k(T_2)\\
-Y_3 & = g_l(\beta_{03}+\beta_3^T Z) = g_k(T_3)\\
-\vdots & = \quad \quad \vdots\\
-Y_K & = g_k(\beta_{0K}+\beta_K^T Z) = g_k(T_K). \label{eq:output}
-\end{array}
-\end{equation}
-
-En esta última capa tenemos que estimar $(M+1)\times K$ parámetros. Para entender un poco la cantidad de parámetros se que tienen que estimar veamos las matrices de parámetros en cada capa.
+\begin{figure}[h]
+  \scalebox{1.3}{\includegraphics{img/red-neuronal-m.png}}
+\caption{Arquitectura de una red neuronal.}
+\label{red-neuronal-m}
+\end{figure}
 
 \begin{itemize}
-\item Parámetros para la primera capa \ref{eq:params1},
-
-\begin{equation}
-\begin{bmatrix}
-\alpha_{01} & \alpha_{11} & \alpha_{21} & ... & \alpha_{p1}\\
-\alpha_{02} & \alpha_{12} & \alpha_{22} & ... & \alpha_{p2}\\
-\vdots & \vdots  & \vdots &       &   \vdots \\
-\alpha_{0M} & \alpha_{1M} & \alpha_{2M} & ... & \alpha_{pM}\label{eq:params1}
-\end{bmatrix}_{M\times(p+1)}^T
-\end{equation}
-
-\item Parámetros para la segunda capa \ref{eq:params2},
-\begin{equation}
-\begin{bmatrix}
-\beta_{01} & \beta_{11} & \beta_{21} & ... & \beta_{M1}\\
-\beta_{02} & \beta_{12} & \beta_{22} & ... & \beta_{M2}\\
-\vdots & \vdots  & \vdots &   & \vdots \\
-\beta_{0K} & \beta_{1K} & \beta_{2K} & ... & \beta_{MK}\label{eq:params2}
-\end{bmatrix}_{K\times(M+1)}^T
-\end{equation}
+\item Capa de entrada: Esta capa recibe los datos de entrada, sirve como un sensor a estímulos externos. Aquí no se lleva a cabo ningún mecanismo de aprendizaje, la intención de esta capa es distribuir los datos a las siguientes capas.
+\item Capa de salida: Es la capa donde se forman las salidas de la red.
+\item Capas ocultas: Son las capas que se encuentran entre las capas de entrada y salida, no tienen conexión directa con el exterior y son responsables de aprender características generales y específicas de los datos de entrada, gracias a eso las redes neuronales son capaces de representar más fehacientemente determinadas características del entorno que tratan de modelar \cite{modelo-computacional}.
 \end{itemize}
 
-Los resultados $Y=[Y_1\ Y_2\ ...\ Y_K]^T$ proporcionan el resultado de la estimación que genera la Red Neuronal. En este paso se proporcionan las entradas $X$ y los parámetros $\alpha_{im}$, $\alpha_{0m}$, $\beta_{mk}$ y $\beta_{0k}$, con $i=1,...,p$, $m=1,...,M$ y $k=1,...,K$. Cada $Y_k$ queda expresado de la forma siguiente,
+Otro concepto clave de las redes neuronales es escoger la arquitectura de la red. La palabra arquitectura se refiere a la estructura general de la red: cuántas neuronas debería tener y cómo estas neuronas deberían conectarse entre sí \cite{deep}. En la figura \ref{red-neuronal-m}, se puede observar una arquitectura de una red neuronal de 5 capas. La cantidad de neuronas de entrada corresponde a la cantidad de variables independientes a utilizar. Por otra parte, la cantidad de capas ocultas y neuronas por capas ocultas son arbitrarias, depende de la persona que este diseñando la red y la complejidad del problema que se quiera resolver, por último, la cantidad de neuronas en la capa de salida depende de la cantidad de variables dependientes que tenga el problema. En estas arquitecturas las principales consideraciones arquitectónicas son elegir la profundidad y la cantidad de neuronas por capa \cite{deep}. Elegir la arquitectura correcta para una red neuronal, es un proceso de ensayo y error, es más un arte que una ciencia y no esta normalizado en la literatura, la experiencia es un factor determinante \cite{chollet}.
+\subsection{Aprendizaje de una red neuronal}
 
-\begin{equation}
-Y_k = f_k(X)= g_k(T_k)=g_k(\beta_{0k}+\displaystyle\sum_{m=1}^{M}\beta_{mk}\ \sigma(\alpha_{0m}+\sum_{i=1}^{p}\alpha_{im}x_i))\label{eq:estimatedy}.
-\end{equation}
+La característica más importante de una red neuronal es la capacidad de aprender de su entorno y mejorar su rendimiento a través del aprendizaje. La manera en que las neuronas de una red neuronal están estructuradas está altamente relacionada con el algoritmo de aprendizaje, las dos técnicas principales que se utilizan para entrenar una red neuronal como la de la figura \ref{red-neuronal-m} son el algoritmo de retropropagación y el descenso del gradiente.
 
-\subsubsection{Pérdida o Error}
+El proceso de aprendizaje consiste en ajustar los parámetros de la red neuronal de tal forma que la capacite para la resolución eficiente de un problema. Una red es capaz de aprender acerca de su entorno a través de un proceso iterativo de ajustes aplicados a sus pesos y sesgos, idealmente la red obtendrá mejores resultados después de cada iteración de ajuste en sus parámetros \cite{neuron-2}. Como se explicó anteriormente las redes neuronales son un tipo de algoritmo de aprendizaje supervisado, el objetivo en este tipo de aprendizaje es que los valores estimados de la red sean lo más próximo posibles a los valores observados, el aprendizaje se formula como minimizar el error entre la salida obtenida por la red y la salida deseada, lo cual se traduce a encontrar el punto mínimo de una función de error o perdida \cite{modelo-computacional}. Por ejemplo, si se quiere resolver un problema de regresión se suele utilizar como función de perdida, la suma del cuadrado de los errores, donde se calcula el cuadrado de la diferencia entre el valor observado y el valor estimado por la red \cite{alex}. Esta función de error esta definida por:
+\[
+E=\sum_{i=1}^N E_i=\sum_{i=1}^N \sum_{k=1}^K(y_{ik}-f_k(x_i))^2.
+\]
 
-El proceso de aprendizaje o ajuste de los parámetros de la Red Neuronal consiste en dos pasos fundamentales, el primero es el cálculo del error o distancia entre la estimación que produce la Red Neuronal y el valor observado y el segundo es el ajuste de los parámetros mediante el proceso de optimización que minimiza el error.
+Donde $N$ es el tamaño de la muestra, $x_i$ es un vector correspondiente al i-ésimo dato de entrenamiento, $y_{ik}$ el
+vector de salidas deseadas y $f_k(x_i)$ el vector de salidas de la red. El objetivo del algoritmo de entrenamiento será minimizar esta función en función de los pesos y sesgos, es decir, se desea encontrar un conjunto de pesos y sesgos que hagan que el error sea lo más pequeño posible.
 
-Como hemos visto la Red Neuronal cuenta con los parámetros definidos previamente, tambien conocidos como pesos,
-\begin{center}
-\begin{array}{rl}
-\{\alpha_{0m},\alpha_{im}, i=1,...,p, m=1,...,M\} & (p+1)\times M \text{ pesos},\\
-\{\beta_{0k},\beta_{mk}, k=1,...,K\} & (M+1)\times K \text{ pesos}.
-\end{array}
-\end{center}
+Para minimizar una función $f$ es necesario encontrar la dirección en que $f$ decrece más rápido, el concepto de derivada $f’(x)$ es útil para esto, porque indica como cambiar $x$ para hacer una pequeña mejora en la salida $y$. En el caso de una función de varias variables se debe hacer uso del vector gradiente, el cual es un vector que contiene todas las derivadas parciales de una función y es denotado por $\nabla f$ \cite{deep}. Como $E$ depende de todos los parámetros de la red, es una función de varias variables, por lo que es necesario el vector gradiente. El gradiente de esta función es igual a $\frac{\partial E}{\partial w}$, es decir, la derivada parcial de $E$ con respecto a cada uno de los parámetros de la red. El gradiente toma la dirección que determina el incremento más rápido en el error, mientras que la dirección opuesta determina el decremento más rápido. Por lo tanto, el error puede reducirse ajustando cada parámetro en la dirección opuesta al gradiente, este paso es el que se conoce como descenso del gradiente \cite{deep}.
 
-Si se desea realizar una regresión se suele utilizar la suma del cuadrado de los errores, donde se calcula el cuadrado de la diferencia entre el valor observado y el valor estimado por la red. La fórmula queda como sigue,
+El descenso del gradiente es un método iterativo de optimización que encuentra el mínimo de la función de perdida mediante el ajuste de los parámetros de la red neuronal \cite{hands}. Este algoritmo hace uso del vector gradiente para encontrar la dirección en que la función decrece más rápido y ajustar los parámetros según una determinada cantidad, con el fin de acercarse cada vez más a un mínimo de la función de perdida. Suponiendo que el algoritmo se encuentra en la iteración $(n + 1)$ el ajuste de los parámetros queda de la siguiente forma:
+\[
+w(n + 1) = w(n) -\alpha\frac{\partial E}{\partial w}
+\]
 
-\begin{center}
-\begin{equation}
-L=\sum_{i=1}^N L_i=\sum_{i=1}^N \sum_{k=1}^K(y_{ik}-f_k(x_i))^2.\label{eq:errorcuadratico}
-\end{equation}
-\end{center}
-
-Notemos que $N$ es el tamaño de la muestra y $x_i$ es un $p$-vector correspondiente al $i$-ésimo dato de entrenamiento. Cabe destacar que en este caso estamos considerando la suma de los errores, cuando el proceso de ajuste se realiza de esta forma se denomina aprendizaje por lotes (batch learning), cuando se considera sólo un dato se denomina aprendizaje en línea (online learning). Hay otras variantes que consideran mini lotes o subconjuntos de los datos para realizar el cálculo del error y realizar el proceso de ajuste.
-
-Para clasificar se puede utilizar el cuadrado de los errores o la devianza (cross entropy),
-
-\begin{center}
-\begin{equation}
-L=-\sum_{i=1}^N \sum_{k=1}^K\ y_{ik}\log{f_k(x_i)},\label{eq:crossentropy}
-\end{equation}
-\end{center}
-
-y el clasificador sería $G(x)=argmax_k f_k(x_i)$. Con la función de activación softmax \ref{eq:softmax} y la función de devianza para generar la estimación del error, la Red Neuronal es exáctamente un modelo de regresión logística en las capas ocultas y los parámetros se estiman mediante el método de máxima verosimilitud.
-
-\subsubsection{Aprendizaje}
-
-El método que usaremos para ajustar los parámetros es el método iterativo de optimización que encuentra el mínimo de la función de pérdida o error mediante el ajuste de los parámetros considerando el recálculo del gradiente, también conocido como gradiente descendente o descenso del gradiente.
+Donde $\alpha$ es la tasa de aprendizaje que se usa para controlar la cantidad de ajuste de los pesos en cada paso del entrenamiento. En la figura \ref{gradient-descent} se puede observar de forma intuitiva el funcionamiento del descenso del gradiente.
 
 \begin{figure}[h]
-  \scalebox{1.25}{\includegraphics{img/learning.png}}
-\caption{Aprendizaje y ajuste de la Red Neuronal}
-\label{learning}
+  \scalebox{1}{\includegraphics{img/gradient-descent.png}}
+\caption[Método iterativo del descenso del gradiente]{Método iterativo del descenso del gradiente. Modificado de \cite{hands}.}
+\label{gradient-descent}
 \end{figure}
 
-No se desea encontrar un mínimo global ya que esto puede producir un conjunto de parámetros sobreajustados, es decir, que vamos a utilizar una condición de parada para definir un nivel aceptable.
+Para implementar el algoritmo del descenso del gradiente es necesario evaluar el modelo en todo el conjunto de datos de entrenamiento, a medida que el conjunto de entrenamiento crece, el tiempo y el costo computacional para ajustar los parámetros en una sola iteración, se vuelven extremadamente largo y costoso \cite{deep}. Realmente en la práctica se toman aleatoriamente un pequeño número de ejemplos del conjunto de datos de entrenamiento, este conjunto más pequeño se conoce como lote (\textit{batch}) y con este se calcula el error promedio, para obtener el gradiente y ajustar los pesos, este enfoque logra mejores tiempos de entrenamiento y menos costo computacional, esta variación del descenso del gradiente se conoce como \textit{mini-batch gradient descent} \cite{hands} y está basada en el gradiente estocástico, esta última variación toma aleatoriamente un solo ejemplo de los datos de entrenamiento, para enseguida ajustar los pesos sin realizar ningún promedio del error.
 
-El algoritmo del gradiente descendente es iterativo, es decir, el nuevo valor del parámetro se calcula en base valor previo, fíjese en la figura \ref{gradientdescentimg}. El gradiente descendente realiza un proceso de optimización para hallar el mínimo de la función utilizando la dirección del gradiente y una tasa de aprendizaje dada.
+Como se viene explicando el aprendizaje en las redes neuronales requiere calcular el vector gradiente de la función de perdida, estas funciones son bastante complejas porque dependen de cada uno de los parámetros de la red, calcular el gradiente es una tarea muy exigente, por eso se introduce otro algoritmo al proceso de aprendizaje para facilitar este cálculo. Este algoritmo se conoce como retropropagación (\textit{backpropagation}), es capaz de calcular el gradiente de la función de error, con respecto a cada parámetro de la red de una manera muy eficiente.
 
-Dadas las derivadas y $\eta$ la tasa de aprendizaje, los parámetros $\alpha_{im}$ y $\beta_{mk}$, se ajustan iterativamente, suponiendo que estamos en la iteración $(n+1)$ el ajuste queda,
+El algoritmo de retropropagacion también conocido como regla delta generalizada, permite que la información del error fluya hacia atrás a través de la red, para calcular el gradiente \cite{deep}. Intuitivamente consigue que tan responsable son cada uno de los parámetros de la red por parte del error, para luego ajustarlos con el algoritmo del gradiente del descenso \cite{hands}. Para conseguir esto este algoritmo usa la regla de la cadena con un orden específico de operaciones, que es altamente eficiente para calcular las derivadas parciales de la función de error y obtener el vector gradiente de las capas ocultas \cite{deep}.
 
-$$
-\begin{array}{rl}
-\displaystyle \beta_{mk}^{(n+1)} & = \beta_{mk}^{(n)}-\displaystyle\eta\frac{\partial L_i}{\partial \beta_{mk}},\\[+3ex]
-\displaystyle \alpha_{im}^{(n+1)} & = \alpha_{im}^{(n)}-\displaystyle\eta\frac{\partial L_i}{\partial \alpha_{im}}
-\end{array}
-$$
+Para resumir y como se explica en \cite{hands}, el proceso de aprendizaje de una red neuronal consta de los siguientes puntos:
 
-Recordemos que tenemos un $p$-vector de datos de entrada $x_i=[x_{1i}\ x_{2i}\ ...\ x_{pi}]^T$ y para este tenemos el resultado observado $y_i = [y_{1i}\ y_{2i}\ ...\ y_{Ki}]^T$ entonces queremos medir las diferencias de este vector con la estimación generada por la Red Neuronal.
+\begin{itemize}
+\item Se extrae un lote de los datos de entrenamiento, este lote sirve de entrada a la red neuronal para calcular la salida, es decir, los datos estimados, este punto se conoce como alimentación hacia adelante.
+\item Con los datos estimados se calcula el error de la red, se utiliza una función de perdida que compara los valores observados con los valores estimados.
+\item Luego con el algoritmo de retropropagación se calcula el vector gradiente, para saber cuánto contribuyo cada parámetro al error final, utilizando la regla de la cadena y propagando el error hacia atrás, hasta llegar a la capa de entrada.
+\item Finalmente, se utiliza el algoritmo del descenso del gradiente para ajustar los parámetros de la red, utilizando los gradientes calculados.
+\end{itemize}
 
-\begin{figure}[h]
-  \scalebox{0.8}{\includegraphics{img/gradientdescent.png}}
-\caption{Optimización iterativa con saltos en la dirección del gradiente}
-\label{gradientdescentimg}
-\end{figure}
+Por último, en el proceso de aprendizaje no se busca encontrar un mínimo global de la función de perdida, debido a que esto puede resultar en un sobreajuste de los parámetros a los datos de entrenamiento, por eso se tienen condiciones de parada para detener el entrenamiento, por ejemplo, que el error descienda por debajo de un valor establecido o que se hayan cumplido cierta cantidad de iteraciones sobre todo el conjunto de datos de entrenamiento. A estas iteraciones se le conoce como epochs \cite{chollet}.
 
-Partiendo de los valores estimados en \ref{eq:estimatedy} y la función de pérdida definida en \ref{eq:errorcuadratico} vamos a calcular las derivadas parciales de la función de pérdida en relación a cada parámetro aplicando la regla de la cadena,
-\begin{equation}
-\displaystyle \frac{\partial L}{\partial \beta_{mk}} = \displaystyle \frac{\partial \left( \sum_{i=1}^N L_i \right)}{\partial \beta_{mk}} = \displaystyle \sum_{i=1}^N \frac{\partial L_i}{\partial \beta_{mk}},\label{eq:partialsofbeta}
-\end{equation}
-\begin{equation}
-\displaystyle \frac{\partial L}{\partial \alpha_{im}} = \displaystyle \frac{\partial \left( \sum_{i=1}^N L_i \right)}{\partial \alpha_{im}} = \displaystyle \sum_{i=1}^N \frac{\partial L_i}{\partial \alpha_{im}}.\label{eq:partialsofalpha}
-\end{equation}
+Las redes neuronales son de extrema importancia para los investigadores del aprendizaje automático, estas redes forman la base de muchas aplicaciones comerciales importantes en la actualidad, y son las bases teóricas del aprendizaje profundo.
 
-Las derivadas parciales de la función de pérdida con respecto a los parámetros queda de la forma siguiente,
-
-$$
-\begin{array}{rl}
-\displaystyle \frac{\partial L_i}{\partial \beta_{mk}} & = -2(y_{ik}-f_k(x_i))g_k'(\beta_k^T z_i)z_{mi},\\[+3ex]
-\displaystyle \frac{\partial L_i}{\partial \alpha_{im}} & = -\sum_{k=1}^K (y_{ik}-f_k(x_i))g_k'(\beta_k^T z_i)\beta_{mk}\sigma'(\alpha_m^T x_i)x_{im}
-\end{array}
-$$
-
-Si reescribimos la derivada de la función de pérdida de la forma siguiente,
-
-$$
-\begin{array}{rl}
-\displaystyle \frac{\partial L_i}{\partial \beta_{mk}} & = \delta_{ki}\ z_{mi},\\[+3ex]
-\displaystyle \frac{\partial L_i}{\partial \alpha_{im}} & = s_{mi}\ x_{im},
-\end{array}
-$$
-
-donde $\delta_{ki}$ y $s_{mi}$ son los errores de la capa de resultado y capa oculta y $s_{mi}$ es tal que,
-
-$$
-s_{mi}=\sigma'(\alpha_m^T x_i)\displaystyle\sum_{k=1}^K\beta_{km}\delta_{ki}.
-$$
-
-Estas son las formulas de ajuste de la Red Neuronal y se implementan en dos fases, la primera de estimación y la segunda de ajuste o aprendizaje. En la segunda fase las derivadas nos sirven para calcular el gradiente y ajustar los parámetros. Este proceso de ajuste se conoce como propagación reversa (back propagation).
-
-El proceso de aprendizaje se realiza por iteraciones sobre todos los datos y estos se toman en lotes para realizar las fases de estimación y ajuste, estas iteraciones sobre todo los datos se denominan épicas (epochs).
-
-La tasa de aprendizaje usualmente es constante y se puede ajustar para minimizar el error en cada actualización/ajuste de los parámetros.
-
-\subsection{\href{https://en.wikipedia.org/wiki/Activation_function}{Funciones de activación}}
-
-El modelos de Redes Neuronales es no lineal debido al empleo de funciones de activación como se observan en \ref{nonlinearities}. Vamos a revisar las más comunes.
-
-\begin{figure}[h]
-  \scalebox{1.25}{\includegraphics{img/nonlinearities.png}}
-\caption{Funciones de activación}
-\label{nonlinearities}
-\end{figure}
-
-\subsubsection{Función de paso 0 - 1}
-
-\begin{equation}
-f(x) =
-\left\{\begin{array}{rl}
-0, & \text{si } x< 0,\\
-1, & \text{si } x\ge 0.
-\end{array}\right\label{eq:step1}
-\end{equation}
-
-\subsubsection{Función de paso -1 - 1}
-
-\begin{equation}
-f(x) =
-\left\{\begin{array}{rl}
--1, & \text{si } x< 0,\\
-1, & \text{si } x\ge 0.
-\end{array}\right\label{eq:step2}
-\end{equation}
-
-\subsubsection{Sigmoide}
-
-Es la más popular en términos académicos ya que se utilizó en las primeras investigaciones sobre Redes Neuronales.
-
-\begin{equation}
-f(x)=\sigma(x)=\frac{1}{1+e^{-x}}\label{eq:sigmoid}
-\end{equation}
-
-\subsubsection{Rectificador lineal (ReLU)}
-
-\begin{equation}
-f(x)=max(0,x)=
-\left\{\begin{array}{rl}
-0, & \text{si } x\le 0,\\
-x, & \text{si } x> 0.
-\end{array}\right\label{eq:relu}
-\end{equation}
-
-\subsubsection{Rectificador lineal con filtración (Leaky ReLU)}
-
-\begin{equation}
-f(x)=max(0.1x,x)=
-\left\{\begin{array}{rl}
-0.1x, & \text{si } x\le 0,\\
-x, & \text{si } x> 0.
-\end{array}\right.\label{eq:leakyrelu}
-\end{equation}
-
-\subsubsection{Tangente hiperbólica}
-
-\begin{equation}
-f(x)=tanh(x)=\frac{(e^x-e^{-x})}{(e^x+e^{-x})}\label{eq:tanh}
-\end{equation}
-
-\subsubsection{Maxout}
-
-\begin{equation}
-f(\vv{x})=\displaystyle \max_i x_i=\max{(w_1^T x+b_1,w_2^T x+b_2,...)}\label{eq:maxout}
-\end{equation}
-
-\subsubsection{Softmax}
-
-Utilizada como función de salida para generar probabilidades de clase cuando el propósito de la Red Neuronal es clasificar.
-
-\begin{equation}
-g_k(T_k)=\frac{e^{T_k}}{\sum_{l=1}^K e^{T_l}}\label{eq:softmax}
-\end{equation}
-
-
-\subsection{Aprendizaje Profundo}
-
-El Aprendizaje Profundo consiste en construir arquitecturas de Redes Neuronales con múltiples capas ocultas para generar modelos de regresión o clasificación con datos más complejos. En las capas ocultas se aprenden representaciones de los datos que se expresan en términos de otras representaciones más simples, esto nos permite reconocer conceptos complejos en términos de otros conceptos más simples. En el gráfico \ref{multilayer} se puede apreciar como se representa un concepto de una persona en una imagen, combinando conceptos simples como las esquinas y contornos que a la vez se expresan en términos de los bordes.
-
-\begin{figure}[h]
-  \scalebox{0.9}{\includegraphics{img/multilayer.png}}
-\caption{Aprendizaje Profundo}
-\label{multilayer}
-\end{figure}
-
-El ejemplo más importante de un modelo de Aprendizaje Profundo es una Red Neuronal Multicapa con alimentación hacia adelante, es decir, una red de perceptrones multicapa. El perceptrón multicapa es una función matemática que relaciona un conjunto de valores de entrada a otro de salida. Esta función se compone de varias funciones más simples. Cada perceptrón ofrece una nueva representación de la entrada. El modelo genera representaciones de los datos que sirven para realizar inferencias, como se puede ver en la imagen \ref{representationlearning}, el proceso consiste en aprender nuevas características de los datos. LeCun et al. en \cite{lecun-98} señalan que,
-\begin{quotation}
-las Redes Neuronales Multicapa entrenadas con el algoritmo de propagación reversa constituye el mejor ejemplo de una técnica de aprendizaje basada en gradientes. Dada la arquitectura apropiada, los algoritmos basados en aprendizaje basado en gradientes se pueden utilizar para simplificar una superficie de decisión compleja que puede clasificar patrones en varias dimensiones tales como los caracteres escritos a mano con bajo procesamiento... Las Redes Neuronales Convolucionales que están diseñadas específicamente para tratar con la variabilidad de los objetos en dos dimensiones, han mostrado que superan todas las otras técnicas de aprendizaje.
-\end{quotation}
-
-\subsubsection{LeNet}
-
-En \cite{LecunNet} Lecun et al, señalan que es esencial extraer las características apropiadas en el diseño de sistemas de reconocimiento de objetos. Luego señala que para reconocer objetos con alta variabilidad, como los dígitos escritos a mano, es preferible y ventajoso alimentar al sistema con datos sin mucho procesamiento y permitir que un proceso de aprendizaje, mediante Redes Neuronales Convolucionales, extraiga el conjunto apropiado de características.
-
-\begin{figure}[h]
-  \scalebox{0.7}{\includegraphics{img/representationlearning.png}}
-\caption{Aprendizaje de características (Feature learning)}
-\label{representationlearning}
-\end{figure}
-
-Este es uno de los principales trabajos de investigación que crea una red multicapa para el reconocimiento de patrones visuales.
-
-A continuación vamos a describir el desarrollo de métodos de visión por computadora y en particular las Redes Neuronales Convolucionales.
 
 
 

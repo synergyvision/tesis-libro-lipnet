@@ -1,0 +1,25 @@
+% !Rnw root = 000proyecto.Rnw
+
+<<echo=FALSE>>=
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(gridExtra)
+@
+
+\section{Procesamiento del lenguaje natural}
+
+El procesamiento del lenguaje natural (PLN o NLP) es una rama de la inteligencia artificial, que se encarga de diseñar métodos y algoritmos, para que las maquinas sean capaces de comprender el lenguaje natural como lo hacen los seres humanos. El objetivo de los investigadores del PLN es permitir que las computadoras procesen y entiendan de manera automática los idiomas humanos. Es un campo interdisciplinario que combina técnicas de las ciencias de la computación, ciencias cognitivas, lingüísticas, para que las máquinas entiendan el lenguaje natural con el propósito de realizar tareas útiles \cite{NLP}.
+
+Como se explica en \cite{NLP}, el PLN desde una perspectiva científica busca modelar los mecanismos cognitivos que permiten la compresión y la producción del lenguaje natural, desde una perspectiva de ingeniería, el PLN busca desarrollar aplicaciones para facilitar las interacciones entre las máquinas y el lenguaje humano. El PLN se está utilizando para resolver los siguientes problemas:
+
+\begin{itemize}
+\item Reconocimiento del habla.
+\item Generación de lenguajes naturales.
+\item Clasificación de textos.
+\item Análisis de los sentimientos.
+\item Traducción automática.
+\end{itemize}
+
+El lenguaje natural es ambiguo, variante, está en constante cambio y evolución, por ello entender y producir el lenguaje natural utilizando una computadora, ha sido una tarea muy exigente para los investigadores del área \cite{NLP}. Desde 1950 se han diseñado diversas técnicas para resolver problemas como el reconocimiento del habla o la traducción de idiomas, sin embargo, los resultados de estas técnicas dejaron mucho que desear, esto cambio cuando se introdujo el aprendizaje profundo al mundo del PLN. El aprendizaje profundo ha causado un gran impacto en el reconocimiento y comprensión del habla, la traducción de idiomas, sistemas de dialogo, entre otras aplicaciones. Otros avances importantes de aplicar el aprendizaje profundo a los problemas del PLN, son las técnicas de aprendizaje secuencia a secuencia y los modelos de atención, estas técnicas han logrado atacar problemas como la compresión y la síntesis de textos y análisis sintácticos \cite{deep}.
+
+El aprendizaje profundo combina dos tipos de red neuronal para crear arquitecturas capaces de resolver los problemas relacionados con el PLN, estas redes son: las redes neuronales con alimentación hacia adelante y las redes neuronales recurrentes, estas últimas se explicarán a continuación.

@@ -9,113 +9,52 @@ library(gridExtra)
 \newpage
 
 \chapter{Marco teórico}
+Este capítulo tiene como finalidad presentar las bases teóricas que fundamentan el desarrollo del proyecto y definir los conceptos para el correcto entendimiento de los siguientes capítulos, donde se describen las actividades que se llevaron a cabo durante la investigación. El capítulo constará de una serie de definiciones del mundo de la inteligencia artificial, empezando por el aprendizaje automático, definiendo que son las redes neuronales y finalmente en que consiste el reconocimiento del habla en vídeos.
 
-\section{Aprendizaje  estadístico}
+\section{Aprendizaje  automático}
 
-El aprendizaje estádistico ha tomado relevancia en áreas como la ciencia, tecnología, medicina y finanzas. Hoy en día se pueden resolver problemas como:
+El aprendizaje automático mejor conocido como \textit{Machine Learning} es un concepto que ha tomado gran relevancia en la actualidad y que se escucha cada vez con mayor frecuencia en áreas como la ciencia, la tecnología, medicina y finanzas. Ha logrado resolver problemas como:
 \begin{itemize}
 \item Predecir si un paciente sufrirá una enfermedad basados en sus datos demográficos y los resultados de exámenes.
 \item Reconocer objetos o patrones visuales en imágenes.
 \item Realizar traducciones de texto.
-\item Generar subtítulos de forma automatizada en un video.
+\item Generar subtítulos de forma automatizada en un vídeo.
 \item Programar agentes automatizados e interactivos para ofrecer ayuda a los clientes.
 \item Predecir el desempeño de una empresa basados en sus indicadores económicos.
 \end{itemize}
 
-Las técnicas de aprendizaje nos proporcionan métodos para estimar programas que resuelven algún problema sin ser explícitamente programados, es por ello que estas técnicas se utilizan en el campo de la Inteligencia Artificial. Se puede hablar de una forma nueva de programar, partimos de conjuntos de datos que proporcionan información sobre algún problema que se desea resolver y se entrenan algoritmos de aprendizaje que realizan un ciclo de estimación, cálculo del error o distancia entre el valor estimado y el valor observado y optimización para ajustar los parámetros de una función que minimiza la distancia entre el valor estimado y el observado la cual nos va a permitir inferir sobre datos nuevos.
+A pesar de ser un concepto que ha ganado mucha popularidad en la actualidad sus orígenes se remontan a los años 50. En el año 1959, Samuel \cite{samuel}, define el concepto de aprendizaje automático como “el campo de estudio que da a las computadoras la habilidad de aprender sin ser explícitamente programadas”. Otra definición a la que se hace bastante referencia en la literatura y más orientada a la ingeniería fue elaborada por Mitchell \cite{mitchell}, quien lo definió de la siguiente manera, “Se dice que un programa de computadora aprende de la experiencia \textit{E} con respecto a alguna tarea \textit{T} y alguna medida de rendimiento \textit{P}, si su rendimiento en \textit{T}, medido por \textit{P}, mejora con la experiencia \textit{E}”. El aprendizaje automático, es la ciencia de programar computadoras para que puedan aprender de los datos y resolver problemas para los cuales no fueron explícitamente programados.
 
-Es decir, en lugar de programar la solución explícitamente vamos a aproximar una función que es capaz de llevar a cabo la actividad con un margen de error conocido en relación a los datos proporcionados.
+Este enfoque permite abordar problemas que son muy difíciles de resolver con programas escritos y diseñados con un enfoque tradicional, por ejemplo, resolver el problema de traducir un idioma a otro, se podría realizar escribiendo un conjunto de instrucciones que procese el texto a traducir, sin embargo, a medida que se va realizando el programa este crece en complejidad y su desempeño en la tarea es bastante pobre. Al utilizar el aprendizaje automático se implementaría un modelo que aprenda a traducir idiomas, este enfoque permite no tener instrucciones en el programa que explícitamente se encarguen de traducir un idioma a otro, sino tener un programa que aprenda a realizar esta tarea, este tipo de algoritmos son mucho más escalables por que aprenden patrones que se encuentran en los datos.
 
-En un escenario usual contamos con los datos, una medición como el precio de un activo financiero o datos categóricos sobre la presencia de una enfermedad o no, basándonos en las características propias de cada dato, deseamos realizar inferencias sobre datos nuevos. En el proceso de aprendizaje se utilizan características conocidas de los datos y se pueden identificar o generar nuevas. Todas estas características proporcionan información que se utiliza para estimar el resultado y ajustar los parámetros del modelo hasta que logramos minimizar el error, sin sobreajustar o sesgar el modelo.
+Un algoritmo de \textit{machine learning} es entrenado con muchos ejemplos relevantes para realizar una tarea, encuentra una estructura estadística en estos ejemplos que le permiten aprender patrones para automatizar la tarea. Esta área de estudio está altamente relacionada con la estadística, pero a diferencia de esta el \textit{machine learning} tiende a tratar con conjuntos de datos muy grandes \cite{chollet}. El \textit{machine learning} involucra los siguientes puntos:
+\begin{itemize}
+\item Datos de entrada.
+\item Datos observados.
+\item Medida de rendiemiento.
+\end{itemize}
 
-Las técnicas de aprendizaje se clasifican en supervisado y no supervisado. El aprendizaje supervisado consiste en ajustar modelos partiendo de datos que están etiquetados, es decir, que cada dato tiene asociado el valor de la característica que queremos predecir. El aprendizaje no supervisado consiste en proporcionar los datos y sus características, sin incluir o sin conocer las características que se desean predecir.
+Un algoritmo de \textit{machine learning} consiste en transformar los datos de entrada en salidas que tienen una gran relevancia para resolver una tarea, estas salidas se conocen como datos estimados, luego de que se obtienen estos datos, se evalúan contra los datos observados utilizando una medida de rendiemiento, esta medida se utiliza para calcular el error o distancia entre los datos observados y los datos estimados y así entender que tan bien está realizando la tarea el algoritmo. En base a la medida de rendiemiento se ajusta el funcionamiento del algoritmo, con el fin de minimizar la distancia entre los valores observados y estimados y así minimizar el error \cite{chollet}. Este proceso se conoce como entrenamiento y permite al algoritmo aprender patrones, encontrar características e información relevante a la tarea, para realizar estimaciones cada vez más cercanas a los datos observados. Un modelo de \textit{machine learning} parte de un conjunto de datos que contienen información sobre un problema que se desea resolver, realiza un ciclo de estimación y cálculo del error para ajustar el funcionamiento del modelo, minimizar el error y así inferir sobre datos nuevos \cite{alex}. El aprendizaje de un algoritmo de \textit{machine learning} se puede interpretar como el ajuste de los parámetros del algoritmo, este ajuste se debe al proceso de entrenamiento, que mediante la optimización de una función que minimiza el error, ajusta el funcionamiento del algoritmo automáticamente, permitiendole realizar mejores inferencias sobre datos nuevos.
 
-Los modelos de aprendizaje supervisado consisten en un proceso de entrenamiento que permite ajustar los parámetros del modelo mediante un proceso de optimización de una función que minimiza el error. Estos modelos plantean una distyuntiva entre el sesgo del modelo y el error aceptado. El sesgo indica que tan ajustado está el modelo a los datos observados y su capacidad para realizar inferencia sobre datos nuevos. En este caso los datos se dividen en dos conjuntos, uno de entrenamiento y otro de prueba, el primer conjunto de datos se utiliza para realizar el proceso de estimación y ajuste de parámetros y luego se prueba el modelo obtenido con el conjunto de datos de prueba. El aprendizaje se puede interpretar en este caso como el ajuste de parámetros de un modelo como resultado de un proceso de optimización que minimiza el error o maximiza los aciertos del modelo. Es un proceso de regresión, es decir, un proceso para conseguir una función que surge de los datos provistos. Vamos a seguir las definiciones realizadas en \cite{Hastie-et-al-2016}.
+Cuando se realiza un modelo de \textit{machine learning}, es más importante el desempeño que tenga en datos que nunca ha visto antes, ya que esto determinará que tan bien funcionará el algoritmo cuando sea desplegado en el mundo real \cite{deep}, por lo tanto, los datos de entrada se dividen en dos conjuntos, el conjunto de datos de entrenamiento y el conjunto de datos de prueba. El conjunto de datos de entrenamiento, se utiliza para entrenar el algoritmo en la tarea que se desea resolver y ajustar el funcionamiento del mismo para que realice estimaciones cada vez mejores \cite{alex}. El conjunto de datos de prueba es independiente de los datos utilizados para entrenar el modelo y sirve para medir el rendimiento en datos nunca antes vistos, se utiliza la misma medida de rendimiento que se utilizó en el proceso de entranamiento.
 
-Sea $X$ la variable de entrada que puede ser un valor o un vector de valores donde $X_i$ representa la $i$-ésima entrada y lo denotamos en minúsculas $x_i$ como el $i$-ésimo valor o dato observado que puede ser un escalar o un vector.
-En el caso que sea un $p$-vector este se denota como $x_i=[x_{i1},...,x_{ip}]$, donde $x_{ij}$ denota la $j$-ésima característica y $j=1,...,p$. Los datos se pueden representar en una matríz $\bf{X}$ de dimensión $N\times p$, es decir, está confirmada por $N$ $p$-vectores como se puede ver en \ref{eq:inputX},
+El reto principal del \textit{machine learning}, es tener un buen rendimiento no solo en los datos con los que se entrenó el modelo, sino también en datos nunca antes vistos. Esta capacidad de tener un buen rendimiento en datos no observados antes, se llama generalización \cite{deep}. A la hora de entrenar un modelo de \textit{machine learning}, la generalización se puede ver perjudicada por dos factores: el sobreajuste (\textit{overfitting}) y subajuste (\textit{underfitting}). El subajuste sucede cuando el modelo no tiene la capacidad de siquiera tener buenos resultados en los datos de entrenamiento, por lo tanto, es incapaz de generalizar bien en datos nunca antes vistos. El sobreajuste sucede cuando los parámetros del algoritmo se ajustan demasiado a los datos de entrenamiento, un modelo sobreajustado tiene un buen rendimiento en los datos de entrenamiento, pero un rendimiento bastante pobre en los datos de prueba o en datos que no ha visto antes. En el proceso de aprendizaje de un algoritmo de \textit{machine learning}, se utilizan las características conocidas de los datos. Todas estas características proporcionan información para que el modelo estime, calcule el error, realice el ajuste y minimice el error \cite{alex}. Todo este proceso se debe realizar teniendo cuidado de no sobreajustar o subajustar el modelo, de modo que tenga un buen rendimiento y pueda generalizar mejor.
 
-\begin{equation}
-\bf{X} = \begin{bmatrix}
-x_{11} & x_{12} & ... & x_{1p}\\
-x_{21} & x_{22} & ... & x_{2p}\\
-x_{31} & x_{32} & ... & x_{3p}\\
-\vdots & ... & ... & \vdots\\
- x_{N1} & x_{N2} & ... & x_{Np}. \label{eq:inputX}
-\end{bmatrix}_{N\times p}
-\end{equation}
+Como se ha venido explicando un algoritmo de \textit{machine learning} pasa por un proceso de aprendizaje para poder resolver un problema, existen diferentes técnicas de aprendizaje las cuales se dividen en:
+\begin{itemize}
+	\item Aprendizaje supervisado.
+	\item Aprendizaje no supervisado.
+\end{itemize}
 
-El resultado provisto en los datos ya sea numérico lo denotamos con $Y$ o cualitativo como $G$ y los valores estimados como $\hat{Y}$ o $\hat{G}$.
+\subsection{Aprendizaje supervisado}
+En este enfoque los datos de entrenamiento están asociados a un objetivo o etiqueta, esta etiqueta representa el valor de la característica que se desea predecir, por ejemplo, si se quisiera clasificar si una imagen es un perro o un gato, cada imagen del conjunto de imágenes de entrenamiento, vendría etiquetada con una de estas dos clases. El término aprendizaje supervisado se origina porque la etiqueta es provista por un instructor o maestro, que le enseña al modelo de \textit{machine learning} el resultado de la tarea que debe realizar \cite{deep}. Un problema clásico del aprendizaje supervisado es la clasificación, como el ejemplo de clasificar si una imagen es un perro o un gato. Otro problema típico que se puede resolver con esta técnica es inferir un valor numérico, como el precio de un inmueble basados en distintas características (antigüedad, zona, cantidad de habitaciones), este tipo de problemas se conoce como regresión \cite{hands}. Entre las técnicas más populares de aprendizaje supervisado se encuentran la regresión lineal, regresión logística, máquina de vectores de soporte, arboles de decisión, arboles aleatorios y redes neuronales \cite{hands}. Este documento se centra en la aplicación de las redes neuronales, el corazón del aprendizaje profundo, se definirá más adelante como pueden ser utilizadas para abordar problemas como la visión por computadora y el procesamiento del lenguaje natural dos de las técnicas principales para la lectura de labios.
 
-En el modelo de aprendizaje supervisado asumimos que contamos con los datos de entrenamiento $(x_i, y_i)$ o $(x_i, g_i)$ donde $i=1,...N$.
+\subsection{Aprendizaje no supervisado}
+A diferencia del aprendizaje supervisado, esta técnica no necesita que los datos de entrenamiento estén previamente asociados a una etiqueta, es decir, no necesitan del conjunto de datos observados para ajustar los parámetros del modelo, debido a la falta de estos datos objetivos que cumplen el papel de un maestro en el aprendizaje supervisado a esta técnica se le conoce como aprendizaje no supervisado \cite{statical-learning}. Este enfoque se encarga de aprender características útiles de la estructura del conjunto de datos \cite{deep}, se utiliza para comprender mejor las correlaciones que existen en los datos, para la visualización y la compresión de los mismos.
 
-A partir de estos datos vamos a contruir un modelo estadístico, primero vamos a considerar el caso de un resultado numérico y consideramos a $X$ como un vector aleatorio tal que $X\in\mathcal{R}^p$ y $Y\in\mathcal{R}$ una variable aleatoria real. Estamos interesados en conseguir una función $f(X)$ para predecir $Y$ dados los valores de entrada $X$.
+Algunas de las técnicas más populares de este enfoque son el clustering, la detención de anomalías y la reducción de la dimensionalidad. Por ejemplo, si se tuviera un conjunto de datos conformados por los usuarios de un sitio web, se podría utilizar la técnica de clustering para identificar patrones y agrupar a estos usuarios en grupos separables \cite{hands}. Otro de los usos que se le da este enfoque es la reducción de la dimensionalidad, lo cual consiste en simplificar el conjunto de datos sin perder información relevante al problema. Esta última técnica es a menudo combinada con un modelo de aprendizaje supervisado con el fin de entrenar más rápido, reducir el espacio en memoria e incluso obtener mejores resultados \cite{hands}.
 
-Nos interesa realizar un modelo capaz de predecir basándonos en una muestra de entrenamiento $(x_1,y_1),...(x_N,y_N)$. Es decir, el modelo produce $\hat{y}_i$ estimado para cada $x_i$ y el proceso de aprendizaje consiste en minimizar una función de pérdida $L(y,\hat{y})$, es decir, minimizar la distancia entre el valor estimado y el valor observado. Si suponemos que $(X,Y)$ son variables aleatorias representadas por una función de densidad conjunta $P(X,Y)$, entonces el aprendizaje supervisado se puede caracterizar como la estimación de una función de densidad, donde interesa conocer las propiedades de $P(Y\mid X)$. En este caso nos interesa conseguir los parámetros $\mu$ tal que para cada $x$:
-$$\mu(x) = argmin_{\theta} E_{Y|X}L(Y,\hat{Y}(\theta))$$
-
-Partiendo de las variables independientes, que son las características observadas, queremos estimar la variable dependiente mediante un modelo que minimize el error. En un modelo de regresión donde nos interesa estimar el precio de una acción entonces el valor a estimar es un número real o una cantidad, $y\in\mathbb{R}$. En un modelo de clasificación que nos indica cual dígito escrito a mano corresponde con una imagen vamos a ver que $y\in\{0, 1,...,9\}$, o en general $y\in\{g_1,..,g_k\}$ donde $g_i$ representa la clase $i$ a la cual pertenece el dato. Las clases también son denominadas categorías, variables discretas o factores. El resultado de un modelo de clasificación es una medida cualitativa, tanto la regresión como la clasificación tienen muchos elementos comunes, en ambos casos estamos aproximando una función estimadora de error mínimo.
-
-Desde el punto de vista del aprendizaje automatizado podemos suponer por simplicidad que los errores son aditivos y que el modelo aleatorio $Y=f(X)+\epsilon$ es un modelo razonable. El aprendizaje supervisado estima $f$ mediante un proceso de estimación y ajuste. Partimos de los datos de entrenamiento $(x_i,y_i), i=1,...,N$. Se proporciona $x_i$ como entrada al proceso de estimación que genera como resultado $\hat{y_i}$ y luego se realiza un ajuste de la estimación basándonos en la relación entre el valor estimado y el valor observado, es decir, se calcula el error o distancia $(y_i-\hat{y_i})$ entre $y_i$ y $\hat{y_i}=\hat{f}(x_i)$. Este es el proceso de aprendizaje donde se espera obtener una función de predicción que genera resultados suficientemente cercanos a los valores observados en los datos.
-
-El proceso de aprendizaje previo ha sido la motivación que guía la investigación de las técnicas de aprendizaje supervisado como el aprendizaje automatizado, basados en el razonamiento humano y la redes neuronales con analogías al cerebro humano. El acercamiento desde el punto de vista de la matemática y estadísticas es desde la perspectiva de la aproximación y estimación de funciones.
-
-Por otra parte el aprendizaje no supervisado consiste en trabajar con los datos, sin realizar ningún proceso de ajuste de parámetros a un resultado esperado. Sólo contamos con los datos $X$ y nos interesa conseguir relaciones entre estos datos que hagan emerger nuevas características. Es decir, para $N$ observaciones $(x_1,...,x_N)$ de un vector aleatorio $X$ con densidad conjunta $P(X)$, el objetivo es inferir propiedades sin información adicional.
-
-\subsection{Métricas de desempeño}
-
-Para entender el alcance y efectividad de un método de aprendizaje es necesario establecer las métricas que indicarán si el desempeño es el esperado. En los métodos de clasificación se desea contrastar el resultado inferido contra el resultado observado. Con esto en mente se realiza la división del conjunto de datos en datos de entrenamiento y datos de prueba. Se utilizan los datos de entrenamiento para estimar y ajustar el modelo y luego se utiliza el modelo ajustado para realizar inferencias sobre los datos de prueba.
-
-En el caso de un modelo de clasificación binario o dicotómico, primero vamos a colocar en una tabla los valores observados y los inferidos como en el cuadro \ref{confusion}. Tenemos cuatro casos:
-\begin{enumerate}
-\item Valores observados positivos y se infieren positivos, los denominamos $vp$ por verdaderos positivos.
-\item Valores observados negativos y se infieren positivos, los denominamos $fp$ por falsos positivos.
-\item Valores observados positivos y se infieren negativos, los denominamos $fn$ por falsos negativos.
-\item Valores observados negativos y se infieren negativos, los denominamos $vn$ por verdaderos negativos.
-\end{enumerate}
-
-\begin{table}[htb]
-\centering
-\begin{tabular}{|l|c|c|c|}
-\hline
-     &                          & \multicolumn{2}{|c|}{Observado}  \\ \hline
-     & Población                & Positivos   & Negativos         \\ \hline
-\multirow{2}{*}{Inferidos}   & Inferidos positivos & $vp$  & $fp$ \\
-                               & Inferidos negativos        & $fn$       & $vn$  \\ \hline
-\end{tabular}
-\caption{Matriz de confusión}
-\label{confusion}
-\end{table}
-
-A partir de esta matriz vamos a definir las métricas siguientes para medir la eficacia del modelo de inferencia.
-
-\subsubsection{Error}
-Es la proporción de la suma entre los falsos positivos y falsos negativos y los datos, el cálculo se realiza con la fórmula siguiente:
-\begin{equation}
-\text{Error}=\displaystyle\frac{fp+fn}{\text{Población}}.
-\label{metric-error}
-\end{equation}
-
-\subsubsection{Exactitud}
-Es la proporción de la suma entre los verdaderos positivos y los verdaderos negativos y todos los datos y lo calculamos con la fórmula siguiente:
-\begin{equation}
-\text{Exactitud}=\displaystyle\frac{vp+vn}{\text{Población}}.
-\label{metric-exactitud}
-\end{equation}
-
-\subsubsection{Precisión}
-Es la proporción entre los verdaderos positivos y todos los inferidos como positivos y la fórmula es la siguiente:
-\begin{equation}
-\text{Precisión}=\displaystyle\frac{vp}{vp+fp}.
-\label{metric-precision}
-\end{equation}
-
-\subsubsection{Sensibilidad - Recall}
-Es la proporción entre los verdaderos positivos y la suma entre los verdaderos positivos y los falsos negativos, la fórmula es como sigue:
-\begin{equation}
-\text{Sensibilidad}=\displaystyle\frac{vp}{vp+fn}.
-\label{metric-sensibilidad}
-\end{equation}
+Cabe destacar que estos son solo algunos de los algoritmos que existen en el campo del \textit{machine learning}, estas técnicas de aprendizaje han tomado gran relevancia en los últimos años, por la creciente cantidad de conjuntos de datos y el excelente rendimiento que tienen en problemas de clasificación, regresión, clustering entre otros. El aprendizaje supervisado es por lejos la forma dominante de aprendizaje profundo, con una gran variedad de aplicaciones en el mundo real \cite{chollet}. Al final todos estos enfoques de aprendizaje proporcionan técnicas para desarrollar programas que resuelven un problema sin ser explícitamente programados para ello, a través del entrenamiento sobre un conjunto de datos, donde se calcula un error y se ajustan los parámetros de un modelo.
 
 
 

@@ -1,0 +1,37 @@
+% !Rnw root = 000proyecto.Rnw
+
+<<echo=FALSE>>=
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(gridExtra)
+@
+
+
+\section{Lectura automática de labios}
+
+Como ya se explicó en el planteamiento del problema, la lectura de labios se usa para comprender el habla sin siquiera escuchar lo que se dice, solo interpretando el movimiento en los labios, es una técnica especialmente dominada por personas con dificultades auditivas y que resulta bastante complicada de utilizar. La lectura automática de labios consiste en automatizar la capacidad humana de leer labios, es también conocida como reconocimiento visual del habla \cite{vsr}, su objetivo es reconocer el habla a partir de las imágenes de los movimientos de los labios de una persona, estos movimientos se conocen como visemas. La lectura automática de labios, busca que las maquinas sean capaces de reconocer patrones en los movimientos de los labios, que permitan reconocer el habla, convierte los visemas en fonemas o texto que puedan ser de utilidad para un ser humano.
+
+La lectura automática de labios consta de tres fases:
+
+\begin{itemize}
+\item Detectar/localizar rostros humanos.
+\item Localizar los labios.
+\item Lectura de labios.
+\end{itemize}
+
+La detección de rostros es un paso esencial en las aplicaciones relacionados con el rostro, es un tipo específico de detección de objetos, se encarga de ubicar los rostros en una imagen o vídeo, es un problema que se ha estudiado desde los inicios de la visión por computadora y hoy en día existen múltiples técnicas, que facilitan esta tarea con un desempeño bastante notable. La localización de los labios es un problema que también se ha estudiado a raíz de la detección de rostros, es una tarea crítica en la lectura automática de labios, el desempeño de la lectura de labios depende de que tan bien el modelo sea capaz de localizar los labios. La región de la boca y los labios representan la información visual más relevante en la lectura automática de labios \cite{vsr}. Finalmente se encuentra el proceso de la lectura de labios como tal, que consiste en extraer características y reconocer patrones de la región de la boca de una secuencia de frames del rostro de una persona mientras habla. En la figura \ref{lipreading} se pueden apreciar los pasos de la lectura automática de labios.
+
+\begin{figure}[h]
+  \scalebox{1.25}{\includegraphics{img/lipreading.png}}
+\caption{Pasos de la lectura automática de labios}
+\label{lipreading}
+\end{figure}
+
+La lectura automática de labios no tiene un desempeño tan notable, como el reconocimiento del habla a través del audio o a través de medios audiovisuales, esto se debe a las dificultades asociadas a la decodificación del habla a través del canal visual. Uno de los retos principales está en decodificar las ambigüedades visuales que surgen al nivel de las palabras, es decir, palabras que se pueden confundir fácilmente, porque producen los mismos movimientos en los labios o movimientos muy similares, por ejemplo, palabras con las letras “m”, “b” o “p”. Múltiples fonemas producen movimientos en los labios que son indistinguibles, lo cual implica que no hay relación uno a uno entre los fonemas y los visemas, incluso hay fonemas que cambian en apariencia dependiendo del fonema anterior o el siguiente \cite{survey-lip}. Otros retos asociados a la lectura de labios son la iluminación y la eficiente codificación de la información espacio temporal. Los enfoques tradicionales para la lectura automática de labios, se basaban en la apariencia de imágenes y modelos ocultos de Markov, para modelar la información temporal de las secuencias \cite{survey-lip}, esto cambio con la llegada del aprendizaje profundo.
+
+La lectura automática de labios ha sido un problema mayormente investigado por científicos del PLN, pero con los recientes avances del aprendizaje automático, científicos dedicados a este campo y en especial aquellos dedicados al aprendizaje profundo, se han interesado a resolver esta desafiante tarea. Como se viene explicando el objetivo principal de esta técnica, es reconocer las palabras, utilizando solo los patrones visuales que se generan al hablar, por ende, resolver este problema involucra, técnicas para el reconocimiento del habla, procesamiento de imágenes, reconocimiento de patrones, detección de objetos \cite{vsr}, requiere implementar el aprendizaje profundo con un enfoque multimodal, es decir, utilizando conceptos del PLN y la visión por computadora.
+
+Las arquitecturas de redes neuronales profundas que combinan redes convolucionales y redes recurrentes, destacan como las arquitecturas más utilizadas para abordar el problema de la lectura de labios, la mayoría de las investigaciones combinan estas dos redes en arquitecturas capaces de clasificar oraciones, reconocer palabras, frases \cite{survey-lip}. Las investigaciones toman como línea base, una arquitectura con una red convolucional seguida de una red recurrente para procesar una secuencia de \textit{frames}. Utilizan las redes convolucionales para extraer características visuales y las redes recurrentes para modelar las secuencias y aprender dependencias a corto y largo plazo. Múltiples autores han seguido esta línea base proponiendo diferentes arquitecturas, algunos de estos trabajos son los realizados en la Universidad de Oxford, Assael et al. propuso \textit{LipNet} \cite{lip-net}, una arquitectura que realiza clasificación de oraciones, Chung et al en \cite{lr-wild} propuso otra arquitectura similar para resolver la misma tarea.
+
+Del mismo modo que sucedió con otras aplicaciones, los métodos basados en el aprendizaje profundo han alcanzado un desempeño notable para resolver el problema de la lectura de labios, las arquitecturas de redes neuronales profundas, tienen un desempeño similar a enfoques tradicionales en tareas simples, pero tienen mejoras significativas en tareas más complejas. Los primeros algoritmos para la lectura automática de labios, abordaban problemas como el reconocimiento del alfabeto o dígitos, con el tiempo estos algoritmos se volvieron más complejos y realistas, lo que llevo a que se abordaran problemas de más envergadura. La mayoría de estos avances se deben al aprendizaje profundo y la gran cantidad de conjuntos de datos que se han generado para el entrenamiento de estos modelos \cite{survey-lip}. Todos estos avances han hecho que la lectura automática de labios sea utilizada en aplicaciones como el dictado en entornos ruidosos, contraseñas visuales silenciosas, doblado de películas mudas, voz sintética para personas con discapacidad auditiva entre otras aplicaciones.
+
